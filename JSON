@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "www.aegis-systems.global",
+      "destination": "https://aegis-systems.global",
+      "permanent": true
+    }
+  ]
+}
