@@ -1,8 +1,9 @@
 {
   "redirects": [
     {
-      "source": "www.aegis-systems.global",
-      "destination": "https://aegis-systems.global",
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.aegis-systems.global" }],
+      "destination": "https://aegis-systems.global/:path*",
       "permanent": true
     }
   ]
