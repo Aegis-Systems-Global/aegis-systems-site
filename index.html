@@ -6,298 +6,275 @@
   <title>Aegis Systems</title>
   <style>
     :root{
-      --bg:#0b1118;
-      --card:#0f1621;
-      --ink:#e8edf2;
-      --muted:#a9b3bd;
-      --line:#243041;
-      --accent:#9ab4ff;
-      --accent2:#b7c4d6;
-      --ok:#9fd8a5;
+      --bg:#0b1117;        /* page */
+      --panel:#0e141b;     /* cards */
+      --ink:#e6edf3;       /* primary text */
+      --ink-2:#b9c2cc;     /* secondary text */
+      --ink-3:#8b98a5;     /* tertiary */
+      --stroke:#2b3642;
+      --brand:#cfd8e3;     /* mono white vibe */
+      --white:#ffffff;
+      --black:#000000;
+      --radius:14px;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
-      margin:0; font:16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
-      color:var(--ink); background:var(--bg);
+      margin:0;background:var(--bg);color:var(--ink);
+      font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Apple Color Emoji","Segoe UI Emoji";
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
     }
-    a{color:inherit; text-decoration:none}
-    .wrap{max-width:1200px; margin:0 auto; padding:28px 20px 80px}
-
-    /* Top bar */
-    .topbar{display:flex; align-items:center; justify-content:space-between; gap:16px}
-    .brand{display:flex; align-items:center; gap:12px; font-weight:700; letter-spacing:.2px}
-    .sqs{display:flex; gap:6px}
-    .sq{width:6px;height:6px;background:#fff;border-radius:1px;opacity:.95}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1180px;margin:0 auto;padding:28px 22px 80px}
+    .row{display:grid;gap:28px}
+    .grid-2{grid-template-columns:1.2fr 1fr}
+    @media (max-width:980px){.grid-2{grid-template-columns:1fr}}
+    .brand{
+      display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.2px
+    }
+    .dots{display:inline-grid;grid-template-columns:repeat(3,10px);gap:6px}
+    .dots i{width:10px;height:10px;border:2px solid var(--brand);border-radius:2px}
+    .nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}
     .btn{
-      appearance:none; border:1px solid #2d3a4e; color:var(--ink); background:transparent;
-      padding:10px 16px; border-radius:10px; font-weight:600; cursor:pointer;
+      display:inline-flex;align-items:center;gap:10px;
+      padding:12px 18px;border:1px solid var(--stroke);border-radius:999px;
+      background:transparent;color:var(--ink);cursor:pointer;
     }
-    .btn:hover{border-color:#415271}
-    .grid{display:grid; gap:28px}
-    .hero{grid-template-columns:1.1fr .9fr; align-items:start; margin-top:28px}
-    h1{margin:0 0 10px; font-size:54px; line-height:1.05; letter-spacing:.2px}
-    .sub{color:var(--muted); max-width:48ch}
-    .bullets{margin:18px 0 0 0; padding-left:20px; list-style:square}
-    .bullets li{color:var(--ink)}
-    .bullets li::marker{color:#fff}
-    .panel{
-      background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px 20px;
+    .btn:hover{border-color:#3a4756}
+    h1{
+      margin:0 0 16px;font-size:56px;line-height:1.04;font-weight:800;letter-spacing:.2px
     }
-
-    /* Triangle */
-    .triwrap{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px}
-    .trihead{margin:0 0 10px; font-weight:700; color:var(--muted); font-size:14px}
-    .tri{width:100%; aspect-ratio:1.2/1; display:block}
-    .tri text{fill:var(--muted); font-size:12px}
-    .tri path{stroke:#e6eef9; stroke-width:3; fill:none}
-
-    /* Capability cards & KPIs */
-    .caps{grid-template-columns:1fr 1fr}
-    .cap h3{margin:0 0 6px; font-size:16px}
-    .cap p{margin:0; color:var(--muted)}
-    .kpis{grid-template-columns:repeat(4,1fr)}
-    .kpi h4{margin:0 0 6px; font-size:14px; font-weight:800}
-    .kpi small{color:var(--muted); font-size:13px}
-
+    @media (max-width:640px){ h1{font-size:40px} }
+    .lede{color:var(--ink-2);max-width:62ch;margin:6px 0 18px}
+    .bullets{margin:18px 0 0;padding:0;list-style:none}
+    .bullets li{display:flex;gap:12px;margin:10px 0;color:var(--ink)}
+    .bullets li:before{content:"";width:10px;height:10px;border:2px solid var(--brand);border-radius:2px;margin-top:.4em;flex:0 0 10px}
+    .card{background:var(--panel);border:1px solid var(--stroke);border-radius:var(--radius);padding:18px}
+    .card h3{margin:0 0 12px;font-size:15px;color:var(--ink-2);font-weight:700;letter-spacing:.3px}
+    .cap-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media (max-width:880px){.cap-grid{grid-template-columns:1fr}}
+    .cap{background:var(--panel);border:1px solid var(--stroke);border-radius:12px;padding:16px}
+    .cap b{display:block;margin-bottom:6px}
+    /* Triangle section */
+    .tri-card{background:var(--black);border:1px solid var(--stroke);border-radius:var(--radius);padding:18px}
+    .tri-stage{position:relative;aspect-ratio:1.25/1;padding:12px}
+    .tri-label{position:absolute;font-size:14px;color:var(--ink);font-weight:600}
+    .tri-top{top:10px;left:50%;transform:translateX(-50%)}
+    .tri-left{left:10px;bottom:6px}
+    .tri-right{right:10px;bottom:6px}
     /* Chart */
-    .chart{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px}
-    .legend{display:flex; gap:16px; align-items:center; color:var(--muted); font-size:13px; margin:6px 0 14px}
-    .lg{display:inline-flex; align-items:center; gap:6px}
-    .dot{width:10px;height:10px;border-radius:2px}
-    .b1{background:#6b7a8d}
-    .b2{background:#cfd9e8}
-    svg{width:100%; height:260px}
-    .axis text{fill:var(--muted); font-size:12px}
-
-    /* Modal */
-    .modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; padding:16px}
-    .modal.open{display:flex}
-    .scrim{position:absolute; inset:0; background:#0008; backdrop-filter:saturate(120%) blur(2px)}
+    .chart{background:var(--panel);border:1px solid var(--stroke);border-radius:var(--radius);padding:18px}
+    .legend{display:flex;gap:18px;align-items:center;margin-bottom:10px;color:var(--ink-2);font-size:13px}
+    .key{display:inline-flex;gap:6px;align-items:center}
+    .swatch{width:14px;height:14px;border:1px solid var(--stroke);background:#aeb8c4;border-radius:3px}
+    .swatch.aegis{background:#e6edf3}
+    .note{margin-top:8px;color:var(--ink-3);font-size:12px}
+    canvas{width:100%;height:330px;display:block}
+    @media (max-width:640px){ canvas{height:260px} .note{font-size:11px} }
+    /* Modal form */
+    .modal{position:fixed;inset:0;background:rgba(3,7,12,.66);display:none}
+    .modal[open]{display:block}
     .sheet{
-      position:relative; width:min(880px, 96%); background:var(--card); border:1px solid var(--line);
-      border-radius:16px; padding:22px;
+      position:fixed;inset:0;margin:auto;max-width:900px;max-height:100vh;
+      background:var(--panel);border:1px solid var(--stroke);border-radius:16px;
+      display:flex;flex-direction:column;
     }
-    .sheet h2{margin:0 0 10px}
-    .x{position:absolute; right:10px; top:10px; background:transparent; border:0; color:var(--muted); font-size:20px; cursor:pointer}
-    form{display:grid; grid-template-columns:1fr 1fr; gap:14px}
-    label{font-size:12px; color:var(--muted)}
-    input, select, textarea{
-      width:100%; margin-top:6px; padding:12px 12px; border-radius:10px; color:var(--ink);
-      background:#0b121c; border:1px solid var(--line);
+    .sheet header{padding:16px 18px;border-bottom:1px solid var(--stroke);display:flex;justify-content:space-between;align-items:center}
+    .sheet main{padding:18px;overflow:auto}
+    .sheet .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    @media (max-width:720px){ .sheet .grid{grid-template-columns:1fr} }
+    label{font-size:13px;color:var(--ink-2);margin:2px 0 6px;display:block}
+    input,select,textarea{
+      width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--stroke);
+      background:#0c1218;color:var(--ink)
     }
-    textarea{min-height:120px; grid-column:1 / -1; resize:vertical}
-    .submit{grid-column:1/-1; display:flex; justify-content:flex-end; gap:10px; margin-top:8px}
-    .btn.primary{background:#18243a; border-color:#2c3a53}
-    .btn.primary:hover{background:#1c2a46}
-    @media (max-width:900px){
-      .hero{grid-template-columns:1fr}
-      h1{font-size:40px}
-      .caps{grid-template-columns:1fr}
-      .kpis{grid-template-columns:1fr 1fr}
-      form{grid-template-columns:1fr}
+    textarea{min-height:94px;resize:vertical}
+    .sheet footer{
+      position:sticky;bottom:0;background:linear-gradient(to top,var(--panel),rgba(14,20,27,.96));
+      border-top:1px solid var(--stroke);padding:12px 18px;display:flex;justify-content:flex-end;gap:10px
     }
+    .primary{background:var(--ink);color:#0b1117;border:0}
   </style>
 </head>
 <body>
   <div class="wrap">
     <!-- Top bar -->
-    <div class="topbar">
+    <div class="nav">
       <div class="brand">
-        <span class="sqs" aria-hidden="true"><span class="sq"></span><span class="sq"></span><span class="sq"></span></span>
-        <span>Aegis Systems</span>
-        <span class="sqs" aria-hidden="true"><span class="sq"></span><span class="sq"></span><span class="sq"></span></span>
+        <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        Aegis Systems
+        <span class="dots" aria-hidden="true" style="margin-left:6px"><i></i><i></i><i></i></span>
       </div>
       <button class="btn" id="openModal">Request Consideration</button>
     </div>
 
-    <!-- Hero -->
-    <section class="grid hero">
-      <div>
+    <!-- Hero + Triangle -->
+    <div class="row grid-2">
+      <section>
         <h1>Private AI for Critical<br/>Infrastructure</h1>
-        <p class="sub">
-          Sovereign, agentic systems that operate safely inside your perimeter, auditable, deterministic, and fit for regulated environments.
+        <p class="lede">
+          Sovereign, agentic systems that operate safely inside your perimeter,
+          auditable, deterministic, and fit for regulated environments.
         </p>
         <ul class="bullets">
           <li>Agentic automation with verifiable workflows</li>
           <li>Offline / air-gapped options &amp; zero-leak policies</li>
           <li>Discipline-by-Design protocols &amp; audit trails</li>
         </ul>
-      </div>
+      </section>
 
-      <!-- Principles triangle -->
-      <aside class="triwrap">
-        <p class="trihead">Principles — Truth, Sovereignty, Discipline</p>
-        <svg class="tri" viewBox="0 0 320 280" role="img" aria-label="Triangle of principles">
-          <path d="M160 20 L20 250 L300 250 Z"/>
-          <text x="160" y="16" text-anchor="middle">Truth</text>
-          <text x="20" y="268" text-anchor="start">Discipline</text>
-          <text x="300" y="268" text-anchor="end">Sovereign</text>
-        </svg>
+      <aside class="tri-card">
+        <h3>Principles</h3>
+        <div class="tri-stage">
+          <!-- Labels -->
+          <div class="tri-label tri-top">Truth</div>
+          <div class="tri-label tri-left">Discipline</div>
+          <div class="tri-label tri-right">Sovereign</div>
+          <!-- Triangle -->
+          <svg viewBox="0 0 100 88" width="100%" height="100%" aria-hidden="true">
+            <polyline points="50,2 4,84 96,84 50,2"
+              fill="none" stroke="white" stroke-width="2.2" />
+          </svg>
+        </div>
       </aside>
-    </section>
+    </div>
 
     <!-- Capabilities -->
-    <section class="grid caps" style="margin-top:28px">
-      <div class="panel cap">
-        <h3>Agentic Workflows</h3>
-        <p>Multi-tool execution with explicit guardrails.</p>
-      </div>
-      <div class="panel cap">
-        <h3>Workflow Memory</h3>
-        <p>No repeat mistakes; evidence-linked steps.</p>
-      </div>
-      <div class="panel cap">
-        <h3>Sovereign Compute</h3>
-        <p>Private models; on-prem and offline options.</p>
-      </div>
-      <div class="panel cap">
-        <h3>Discipline Protocols</h3>
-        <p>CAPA, sign-offs, and traceable audit trails.</p>
-      </div>
-    </section>
+    <div class="cap-grid" style="margin-top:28px">
+      <div class="cap"><b>Agentic Workflows</b>Multi-tool execution with explicit guardrails.</div>
+      <div class="cap"><b>Workflow Memory</b>No repeat mistakes; evidence-linked steps.</div>
+      <div class="cap"><b>Sovereign Compute</b>Private models; on-prem and offline options.</div>
+      <div class="cap"><b>Discipline Protocols</b>CAPA, sign-offs, and traceable audit trails.</div>
+    </div>
 
-    <!-- KPIs -->
-    <section class="grid kpis">
-      <div class="panel kpi">
-        <h4>Orchestration latency (p95)</h4>
-        <small>280 ms</small>
-      </div>
-      <div class="panel kpi">
-        <h4>Determinism on gated flows</h4>
-        <small>99.1%</small>
-      </div>
-      <div class="panel kpi">
-        <h4>Step-level logging coverage</h4>
-        <small>100%</small>
-      </div>
-      <div class="panel kpi">
-        <h4>Offline uptime (edge)</h4>
-        <small>&gt; 99.95%</small>
-      </div>
-    </section>
-
-    <!-- Benchmark chart -->
-    <section class="chart" aria-labelledby="benchTitle" style="margin-top:4px">
+    <!-- Metrics + chart -->
+    <div class="chart" style="margin-top:18px">
       <div class="legend">
-        <span class="lg"><span class="dot b1"></span>Baseline (100)</span>
-        <span class="lg"><span class="dot b2"></span>Aegis</span>
+        <span class="key"><span class="swatch"></span> Baseline (100)</span>
+        <span class="key"><span class="swatch aegis"></span> Aegis</span>
       </div>
-      <svg viewBox="0 0 820 280" aria-describedby="benchCaption">
-        <!-- gridlines -->
-        <g stroke="#1f2a3a" stroke-width="1">
-          <line x1="70" y1="230" x2="790" y2="230"/>
-          <line x1="70" y1="180" x2="790" y2="180"/>
-          <line x1="70" y1="130" x2="790" y2="130"/>
-          <line x1="70" y1="80"  x2="790" y2="80"/>
-        </g>
-        <!-- axes labels -->
-        <g class="axis">
-          <text x="70"  y="248">Latency*</text>
-          <text x="230" y="248">Determinism</text>
-          <text x="390" y="248">Audit</text>
-          <text x="550" y="248">Throughput</text>
-          <text x="710" y="248">Uptime</text>
-        </g>
-        <!-- bars (Baseline=100 at y=160; higher is better; latency is inverted in index) -->
-        <!-- Baseline -->
-        <g fill="#6b7a8d">
-          <rect x="90"  y="160" width="40" height="70" rx="3"/>
-          <rect x="250" y="160" width="40" height="70" rx="3"/>
-          <rect x="410" y="160" width="40" height="70" rx="3"/>
-          <rect x="570" y="160" width="40" height="70" rx="3"/>
-          <rect x="730" y="160" width="40" height="70" rx="3"/>
-        </g>
-        <!-- Aegis -->
-        <g fill="#cfd9e8">
-          <rect x="140" y="90"  width="40" height="140" rx="3"/> <!-- Latency index (inverted) -->
-          <rect x="300" y="70"  width="40" height="160" rx="3"/> <!-- Determinism -->
-          <rect x="460" y="60"  width="40" height="170" rx="3"/> <!-- Audit -->
-          <rect x="620" y="100" width="40" height="130" rx="3"/> <!-- Throughput -->
-          <rect x="780" y="40"  width="40" height="190" rx="3"/> <!-- Uptime -->
-        </g>
-      </svg>
-      <p id="benchCaption" class="sub" style="margin:6px 0 0">
+      <canvas id="bars" width="1100" height="330" role="img" aria-label="Benchmark comparison bar chart"></canvas>
+      <div class="note">
         * Latency is inverted in the index (higher is better). Values are representative and workload-adjusted. Baseline = 100.
-      </p>
-    </section>
-  </div>
-
-  <!-- Modal form -->
-  <div class="modal" id="modal">
-    <div class="scrim" role="button" aria-label="Close"></div>
-    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="rfchead">
-      <button class="x" id="closeModal" aria-label="Close">×</button>
-      <h2 id="rfchead">Request Consideration</h2>
-      <p class="sub" style="margin:0 0 14px">Tell us the basics. We’ll follow up securely.</p>
-      <form id="rfcForm">
-        <div>
-          <label>Full name
-            <input type="text" name="name" autocomplete="name" />
-          </label>
-        </div>
-        <div>
-          <label>Work email
-            <input type="email" name="email" autocomplete="email" />
-          </label>
-        </div>
-        <div>
-          <label>Organization
-            <input type="text" name="org" autocomplete="organization" />
-          </label>
-        </div>
-        <div>
-          <label>Organization type
-            <select name="org_type">
-              <option value="" selected hidden></option>
-              <option>Government</option>
-              <option>Regulated enterprise</option>
-              <option>Critical infrastructure operator</option>
-              <option>Private company</option>
-              <option>Other</option>
-            </select>
-          </label>
-        </div>
-        <div>
-          <label>Role / title
-            <input type="text" name="role" />
-          </label>
-        </div>
-        <div>
-          <label>Region / jurisdiction
-            <input type="text" name="region" />
-          </label>
-        </div>
-        <label>Objective (high-level)
-          <textarea name="objective"></textarea>
-        </label>
-        <div class="submit">
-          <button type="button" class="btn" id="cancel">Cancel</button>
-          <button type="submit" class="btn primary">Submit</button>
-        </div>
-      </form>
+      </div>
     </div>
   </div>
 
+  <!-- Modal -->
+  <dialog class="modal" id="modal">
+    <section class="sheet" role="dialog" aria-modal="true" aria-labelledby="formTitle">
+      <header>
+        <strong id="formTitle">Request Consideration</strong>
+        <button class="btn" id="closeModal" aria-label="Close">Close</button>
+      </header>
+      <main>
+        <form id="rfq" novalidate>
+          <div class="grid">
+            <div>
+              <label for="name">Full name</label>
+              <input id="name" name="name" autocomplete="name" />
+            </div>
+            <div>
+              <label for="email">Work email</label>
+              <input id="email" name="email" type="email" autocomplete="email" />
+            </div>
+            <div>
+              <label for="org">Organization</label>
+              <input id="org" name="org" autocomplete="organization" />
+            </div>
+            <div>
+              <label for="role">Role / title</label>
+              <input id="role" name="role" autocomplete="organization-title" />
+            </div>
+            <div>
+              <label for="orgtype">Organization type</label>
+              <select id="orgtype" name="orgtype">
+                <option value="" selected disabled>Select organization type</option>
+                <option>Government</option>
+                <option>Regulated enterprise</option>
+                <option>Critical infrastructure operator</option>
+                <option>Private company</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div>
+              <label for="region">Region / jurisdiction</label>
+              <input id="region" name="region" />
+            </div>
+            <div class="full" style="grid-column:1/-1">
+              <label for="objective">Objective (high-level)</label>
+              <textarea id="objective" name="objective"></textarea>
+            </div>
+          </div>
+        </form>
+      </main>
+      <footer>
+        <button class="btn" id="dismiss">Cancel</button>
+        <button class="btn primary" form="rfq" type="submit">Submit</button>
+      </footer>
+    </section>
+  </dialog>
+
   <script>
-    // Modal controls
+    // Simple bars (vanilla canvas): baseline vs Aegis
+    (function(){
+      const el = document.getElementById('bars');
+      const ctx = el.getContext('2d');
+      const labels = ['Latency*','Determinism','Audit','Throughput','Uptime'];
+      // baseline = 100; Aegis shows uplift (latency inverted)
+      const base = [100,100,100,100,100];
+      const aegis= [160,200,220,180,240];
+      const W = el.width, H = el.height, P = 46;
+      const innerW = W - P*2, innerH = H - P*2;
+      const step = innerW / labels.length;
+
+      // grid
+      ctx.strokeStyle = '#1e2732';
+      ctx.lineWidth = 1;
+      for(let i=0;i<=4;i++){
+        const y = P + (innerH/4)*i;
+        ctx.beginPath(); ctx.moveTo(P,y); ctx.lineTo(W-P,y); ctx.stroke();
+      }
+
+      function drawBar(x, val, color){
+        const max = 240; // cap for our index scale
+        const h = (val/max) * innerH;
+        ctx.fillStyle = color;
+        ctx.fillRect(x, H-P-h, 26, h);
+      }
+
+      for(let i=0;i<labels.length;i++){
+        const x0 = P + step*i + 18;
+        drawBar(x0, base[i], '#aeb8c4');      // baseline
+        drawBar(x0+30, aegis[i], '#e6edf3');  // aegis
+        // x-label
+        ctx.fillStyle = '#b9c2cc';
+        ctx.font = '12px system-ui, -apple-system, Segoe UI, Roboto';
+        ctx.textAlign = 'center';
+        ctx.fillText(labels[i], x0+15, H-14);
+      }
+    })();
+
+    // Modal behavior
     const modal = document.getElementById('modal');
     const openBtn = document.getElementById('openModal');
-    const closeBtn = document.getElementById('closeModal');
-    const cancelBtn = document.getElementById('cancel');
-    modal.addEventListener('click', e=>{
-      if(e.target.classList.contains('scrim')) modal.classList.remove('open');
-    });
-    [openBtn, closeBtn, cancelBtn].forEach(el=>{
-      if(el) el.addEventListener('click', ()=> modal.classList.toggle('open'));
-    });
+    const closeBtn= document.getElementById('closeModal');
+    const dismiss = document.getElementById('dismiss');
+    function lockBody(lock){
+      document.documentElement.style.overflow = lock ? 'hidden' : '';
+      document.body.style.overflow = lock ? 'hidden' : '';
+    }
+    openBtn.addEventListener('click', ()=>{ modal.setAttribute('open',''); lockBody(true); });
+    function closeModal(){ modal.removeAttribute('open'); lockBody(false); }
+    closeBtn.addEventListener('click', closeModal);
+    dismiss.addEventListener('click', closeModal);
+    modal.addEventListener('click', e => { if(e.target === modal) closeModal(); });
 
-    // (Placeholder submit handler — replace with your backend endpoint)
-    document.getElementById('rfcForm').addEventListener('submit', (e)=>{
+    // Prevent submit navigation (you can wire to backend later)
+    document.getElementById('rfq').addEventListener('submit', (e)=>{
       e.preventDefault();
-      alert('Thanks. We received your request.');
-      modal.classList.remove('open');
-      e.target.reset();
+      closeModal();
+      alert('Thanks — we’ll review and revert.');
     });
   </script>
 </body>
