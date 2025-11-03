@@ -32,6 +32,10 @@
   .sq-list li{display:flex;align-items:flex-start;gap:10px;margin:10px 0;color:var(--ink)}
   .sq{width:14px;height:14px;border:2px solid #fff;background:#fff;border-radius:2px;margin-top:2px;flex:0 0 14px}
   /* triangle card */
+/* --- TRIANGLE: force pure-black background + crisp text --- */
+#triangleCanvas,
+#triangleCanvas:where(canvas) { background:#000 !important; }
+.triangle-card { background:#000 !important; }
   .tri-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 14px 8px}
   .tri-title{font-weight:700;margin:4px 8px 8px}
   .tri-wrap{background:#000;border-radius:12px;position:relative;height:min(52vw,480px);display:flex;align-items:center;justify-content:center}
@@ -192,25 +196,65 @@
 
 <script>
 /* ----- Triangle (pure canvas, true-black background inside container) ----- */
-(function(){
-  const c = document.getElementById('triangle');
-  const ctx = c.getContext('2d');
-  const w = c.width, h = c.height;
-  ctx.clearRect(0,0,w,h);
-  // background
+<script>
+function drawTriangle() {
+  const canvas = document.getElementById('triangleCanvas');
+  const ctx = canvas.getContext('2d');
+
+  // Handle HiDPI so text/lines don't shift
+  const dpr = window.devicePixelRatio || 1;
+  const cssW = canvas.clientWidth;
+  const cssH = canvas.clientHeight;
+  canvas.width  = Math.floor(cssW * dpr);
+  canvas.height = Math.floor(cssH * dpr);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  // Clear + pure black background (defensive)
+  ctx.save();
   ctx.fillStyle = '#000';
-  ctx.fillRect(0,0,w,h);
+  ctx.fillRect(0, 0, cssW, cssH);
+  ctx.restore();
 
-  // triangle points
-  const pad = 70;
-  const A = {x: w/2, y: pad+8};
-  const B = {x: pad,   y: h-pad};
-  const C = {x: w-pad, y: h-pad};
+  // Geometry
+  const pad = 40;                      // inner padding
+  const w = cssW, h = cssH;
+  const baseY = h - pad;
+  const apexX = w / 2, apexY = pad;    // centered apex
+  const leftX = pad, leftY = baseY;
+  const rightX = w - pad, rightY = baseY;
 
-  // edges
-  ctx.lineWidth = 8;
+  // Triangle
   ctx.strokeStyle = '#ffffff';
-  ctx.beginPath(); ctx.moveTo(A.x,A.y); ctx.lineTo(B.x,B.y); ctx.lineTo(C.x,C.y); ctx.closePath(); ctx.stroke();
+  ctx.lineWidth = 8;
+  ctx.beginPath();
+  ctx.moveTo(apexX, apexY);
+  ctx.lineTo(leftX, leftY);
+  ctx.lineTo(rightX, rightY);
+  ctx.closePath();
+  ctx.stroke();
+
+  // Labels — big and centered, no drift
+  ctx.fillStyle = '#d7e0ea';
+  ctx.textBaseline = 'middle';
+  ctx.font = '700 22px Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif';
+
+  // Top label (Truth) – centered above apex
+  ctx.textAlign = 'center';
+  ctx.fillText('Truth', apexX, apexY - 20);
+
+  // Bottom left (Discipline)
+  ctx.textAlign = 'left';
+  ctx.fillText('Discipline', leftX, leftY + 26);
+
+  // Bottom right (Sovereign)
+  ctx.textAlign = 'right';
+  ctx.fillText('Sovereign', rightX, rightY + 26);
+}
+
+// call on load + resize so it stays aligned
+window.addEventListener('load', drawTriangle);
+window.addEventListener('resize', drawTriangle);
+</script>
 
   // labels (bigger)
   ctx.fillStyle = '#cfd8e3';
@@ -223,48 +267,58 @@
   ctx.fillText('Sovereign', C.x+2, C.y+26);
 })();
 
-/* ----- Bar chart (baseline vs Aegis, centered) ----- */
-(function(){
-  const c = document.getElementById('bars');
-  const ctx = c.getContext('2d');
-  const w = c.width, h = c.height;
-  const padding = {l:50,r:30,t:10,b:60};
-  const area = {x:padding.l,y:padding.t,w:w-padding.l-padding.r,h:h-padding.t-padding.b};
-
-  const labels = ['Latency*','Determinism','Audit','Throughput','Uptime'];
-  const base =   [100,100,100,100,100];
-  const aegis =  [160,180,200,150,220]; // representative
-
-  const max = 220;
-  // grid
-  ctx.fillStyle='#0c131d'; ctx.fillRect(0,0,w,h);
-  ctx.strokeStyle='#223042'; ctx.lineWidth=1;
-  for(let i=0;i<=4;i++){
-    const y = area.y + area.h - (i*(area.h/4));
-    ctx.beginPath(); ctx.moveTo(area.x,y); ctx.lineTo(area.x+area.w,y); ctx.stroke();
+/* ----- Bar chart (baseline vs Aegis Systems, centered) ----- */
+<script>
+const chartCtx = document.getElementById('benchChart').getContext('2d');
+const benchChart = new Chart(chartCtx, {
+  type: 'bar',
+  data: {
+    labels: ['Latency*', 'Determinism', 'Audit', 'Throughput', 'Uptime'],
+    datasets: [
+      {
+        label: 'Baseline (100)',
+        backgroundColor: 'rgba(160, 170, 180, 0.45)',
+        borderColor: 'rgba(160, 170, 180, 0.9)',
+        borderWidth: 1,
+        data: [120, 120, 120, 120, 120]
+      },
+      {
+        label: 'Aegis Systems',               // <- renamed
+        backgroundColor: 'rgba(208, 220, 255, 0.9)',
+        borderColor: 'rgba(208, 220, 255, 1)',
+        borderWidth: 1,
+        data: [200, 220, 240, 190, 260]      // your illustrative values
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,              // lets it fill the card neatly
+    layout: { padding: { left: 8, right: 8, top: 8, bottom: 0 } },
+    plugins: {
+      legend: {
+        position: 'top',
+        labels: { color: '#cfd8e3', boxWidth: 16, usePointStyle: false }
+      },
+      tooltip: { mode: 'index', intersect: false }
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        ticks: { color: '#cfd8e3', padding: 8 }
+      },
+      y: {
+        beginAtZero: true,
+        grid: { color: 'rgba(255,255,255,0.08)' },
+        ticks: { color: '#9fb0c5', stepSize: 50 }
+      }
+    }
   }
+});
 
-  const barW = area.w/labels.length;
-  const bw = 18; const gap = 10;
-
-  function yScale(v){ return area.y + area.h - (v/max)*area.h; }
-
-  // draw bars
-  labels.forEach((lab,i)=>{
-    const x = area.x + i*barW + barW/2;
-    // baseline
-    ctx.fillStyle='#7f8fa3';
-    ctx.fillRect(x - (bw+gap/2), yScale(base[i]), bw, area.y+area.h - yScale(base[i]));
-    // aegis
-    ctx.fillStyle='#bcd6ff';
-    ctx.fillRect(x + gap/2, yScale(aegis[i]), bw, area.y+area.h - yScale(aegis[i]));
-    // label
-    ctx.fillStyle='#9db0c2';
-    ctx.font='13px system-ui, -apple-system, Segoe UI';
-    ctx.textAlign='center';
-    ctx.fillText(lab, x, h-20);
-  });
-})();
+// Optional: ensure it fits on first paint if container height is set in CSS
+window.addEventListener('load', () => benchChart.resize());
+</script>  
 
 /* ----- Modal ----- */
 const open = document.getElementById('openForm');
