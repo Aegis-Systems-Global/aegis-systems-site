@@ -1,293 +1,304 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Aegis Systems — Private AI for Critical Infrastructure</title>
-  <meta name="description" content="Sovereign, agentic AI systems that operate safely inside your perimeter — auditable, deterministic, and fit for regulated environments.">
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aegis Systems</title>
   <style>
     :root{
-      --bg:#0A1018;          /* page black */
-      --panel:#101620;       /* dark panel */
-      --border:#1c2533;      /* panel border */
-      --text:#E8E5DE;        /* bone white */
-      --muted:#9AA4B2;       /* secondary text */
-      --muted2:#cdd4df;      /* tertiary */
-      --focus:#E8E5DE;
-      --square:#ffffff;      /* pure white squares */
-      --accent:#E8E5DE;      /* mono accent */
+      --bg:#0b1118;
+      --card:#0f1621;
+      --ink:#e8edf2;
+      --muted:#a9b3bd;
+      --line:#243041;
+      --accent:#9ab4ff;
+      --accent2:#b7c4d6;
+      --ok:#9fd8a5;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
-      margin:0;
-      background:var(--bg);
-      color:var(--text);
-      font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      line-height:1.45;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
+      margin:0; font:16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+      color:var(--ink); background:var(--bg);
     }
-    a{color:var(--text);text-decoration:none}
-    .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:1200px; margin:0 auto; padding:28px 20px 80px}
 
-    /* Header */
-    header{
-      position:sticky;top:0;z-index:10;
-      background:linear-gradient(180deg, rgba(10,16,24,.95), rgba(10,16,24,.86));
-      backdrop-filter:saturate(120%) blur(4px);
-      border-bottom:1px solid var(--border);
+    /* Top bar */
+    .topbar{display:flex; align-items:center; justify-content:space-between; gap:16px}
+    .brand{display:flex; align-items:center; gap:12px; font-weight:700; letter-spacing:.2px}
+    .sqs{display:flex; gap:6px}
+    .sq{width:6px;height:6px;background:#fff;border-radius:1px;opacity:.95}
+    .btn{
+      appearance:none; border:1px solid #2d3a4e; color:var(--ink); background:transparent;
+      padding:10px 16px; border-radius:10px; font-weight:600; cursor:pointer;
     }
-    .nav{
-      display:flex;align-items:center;justify-content:space-between;
-      min-height:64px;
-    }
-    .brand{display:flex;align-items:center;gap:16px}
-    .squares{display:flex;gap:6px}
-    .square{
-      width:8px;height:8px;background:var(--square);border-radius:2px;opacity:.95;
-    }
-    .brandname{
-      font-weight:800;font-size:1.25rem;letter-spacing:.3px;
-      display:flex;align-items:center;gap:14px;
-    }
-    .cta{
-      padding:10px 16px;border-radius:12px;border:1px solid var(--border);
-      background:transparent;color:var(--text);font-weight:600;
-    }
-    .cta:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
-
-    /* Hero */
-    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;padding:56px 0 32px}
-    .h-title{font-size:3rem;line-height:1.05;margin:0 0 12px;font-weight:800}
-    .h-sub{color:var(--muted);max-width:54ch;margin-bottom:8px}
-    .bullets{margin:18px 0 0 2px;padding:0;list-style:none}
-    .bullets li{display:flex;gap:10px;margin:12px 0;color:var(--text)}
-    .b-sq{width:10px;height:10px;background:#fff;border-radius:2px;flex:0 0 10px;margin-top:6px}
-
-    /* Principles triangle */
+    .btn:hover{border-color:#415271}
+    .grid{display:grid; gap:28px}
+    .hero{grid-template-columns:1.1fr .9fr; align-items:start; margin-top:28px}
+    h1{margin:0 0 10px; font-size:54px; line-height:1.05; letter-spacing:.2px}
+    .sub{color:var(--muted); max-width:48ch}
+    .bullets{margin:18px 0 0 0; padding-left:20px; list-style:square}
+    .bullets li{color:var(--ink)}
+    .bullets li::marker{color:#fff}
     .panel{
-      background:transparent;border:0;box-shadow:none;border-radius:14px;padding:8px;
+      background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px 20px;
     }
-    .principles h3{margin:0 0 6px;font-size:1rem;color:var(--text);opacity:.9;text-align:center}
-    .principle-tags{margin:0 0 8px;text-align:center;color:var(--muted)}
-    .tri-lbl{fill:var(--text);font-size:14px;opacity:.9;text-anchor:middle;font-family:Inter,system-ui,sans-serif}
-    .tri-stroke{stroke:var(--accent);stroke-width:3;fill:none}
 
-    /* KPI tiles */
-    .kpis{display:grid;grid-template-columns:repeat(4,minmax(160px,1fr));gap:16px;margin:8px 0 18px}
-    .kpi{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
-    .kpi .label{font-weight:700;color:var(--text)}
-    .kpi .value{font-size:.95rem;opacity:.85;margin-top:4px;color:var(--muted2)}
+    /* Triangle */
+    .triwrap{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px}
+    .trihead{margin:0 0 10px; font-weight:700; color:var(--muted); font-size:14px}
+    .tri{width:100%; aspect-ratio:1.2/1; display:block}
+    .tri text{fill:var(--muted); font-size:12px}
+    .tri path{stroke:#e6eef9; stroke-width:3; fill:none}
 
-    /* Chart section */
-    .chart-wrap{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px}
-    .axis-note{color:var(--muted);font-size:.9rem;margin:.6rem 0 0}
+    /* Capability cards & KPIs */
+    .caps{grid-template-columns:1fr 1fr}
+    .cap h3{margin:0 0 6px; font-size:16px}
+    .cap p{margin:0; color:var(--muted)}
+    .kpis{grid-template-columns:repeat(4,1fr)}
+    .kpi h4{margin:0 0 6px; font-size:14px; font-weight:800}
+    .kpi small{color:var(--muted); font-size:13px}
 
-    /* Form */
-    .request{padding:40px 0 80px}
-    .form-head{
-      display:flex;align-items:center;gap:14px;margin-bottom:10px
-    }
-    .form-head .squares .square{width:9px;height:9px}
-    form{
-      background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px;max-width:760px
-    }
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    label{display:block;font-weight:600;margin:10px 0 6px}
-    input,select,textarea{
-      width:100%;background:#0d141d;border:1px solid var(--border);
-      color:var(--text);border-radius:10px;padding:12px 12px;font-size:1rem
-    }
-    textarea{min-height:120px;resize:vertical}
-    .submit{
-      margin-top:16px;padding:12px 18px;border-radius:12px;border:1px solid var(--border);
-      background:transparent;color:var(--text);font-weight:700
-    }
-    .honeypot{position:absolute;left:-50000px}
-    footer{color:var(--muted);text-align:center;padding:40px 0 60px}
+    /* Chart */
+    .chart{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px}
+    .legend{display:flex; gap:16px; align-items:center; color:var(--muted); font-size:13px; margin:6px 0 14px}
+    .lg{display:inline-flex; align-items:center; gap:6px}
+    .dot{width:10px;height:10px;border-radius:2px}
+    .b1{background:#6b7a8d}
+    .b2{background:#cfd9e8}
+    svg{width:100%; height:260px}
+    .axis text{fill:var(--muted); font-size:12px}
 
-    @media (max-width:980px){
+    /* Modal */
+    .modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; padding:16px}
+    .modal.open{display:flex}
+    .scrim{position:absolute; inset:0; background:#0008; backdrop-filter:saturate(120%) blur(2px)}
+    .sheet{
+      position:relative; width:min(880px, 96%); background:var(--card); border:1px solid var(--line);
+      border-radius:16px; padding:22px;
+    }
+    .sheet h2{margin:0 0 10px}
+    .x{position:absolute; right:10px; top:10px; background:transparent; border:0; color:var(--muted); font-size:20px; cursor:pointer}
+    form{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+    label{font-size:12px; color:var(--muted)}
+    input, select, textarea{
+      width:100%; margin-top:6px; padding:12px 12px; border-radius:10px; color:var(--ink);
+      background:#0b121c; border:1px solid var(--line);
+    }
+    textarea{min-height:120px; grid-column:1 / -1; resize:vertical}
+    .submit{grid-column:1/-1; display:flex; justify-content:flex-end; gap:10px; margin-top:8px}
+    .btn.primary{background:#18243a; border-color:#2c3a53}
+    .btn.primary:hover{background:#1c2a46}
+    @media (max-width:900px){
       .hero{grid-template-columns:1fr}
-      .h-title{font-size:2.4rem}
+      h1{font-size:40px}
+      .caps{grid-template-columns:1fr}
       .kpis{grid-template-columns:1fr 1fr}
-      .row{grid-template-columns:1fr}
+      form{grid-template-columns:1fr}
     }
   </style>
 </head>
 <body>
-
-<header>
-  <div class="wrap nav">
-    <div class="brand">
-      <div class="squares">
-        <span class="square"></span><span class="square"></span><span class="square"></span>
+  <div class="wrap">
+    <!-- Top bar -->
+    <div class="topbar">
+      <div class="brand">
+        <span class="sqs" aria-hidden="true"><span class="sq"></span><span class="sq"></span><span class="sq"></span></span>
+        <span>Aegis Systems</span>
+        <span class="sqs" aria-hidden="true"><span class="sq"></span><span class="sq"></span><span class="sq"></span></span>
       </div>
-      <div class="brandname">
-        Aegis Systems
-        <div class="squares">
-          <span class="square"></span><span class="square"></span><span class="square"></span>
-        </div>
-      </div>
-    </div>
-    <a class="cta" href="#request">Request Consideration</a>
-  </div>
-</header>
-
-<main class="wrap">
-
-  <!-- HERO -->
-  <section class="hero">
-    <div>
-      <h1 class="h-title">Private AI for Critical Infrastructure</h1>
-      <p class="h-sub">
-        Sovereign, agentic systems that operate safely inside your perimeter — auditable,
-        deterministic, and fit for regulated environments.
-      </p>
-
-      <ul class="bullets">
-        <li><span class="b-sq"></span><span>Agentic automation with verifiable workflows</span></li>
-        <li><span class="b-sq"></span><span>Offline / air-gapped options &amp; zero-leak policies</span></li>
-        <li><span class="b-sq"></span><span>Discipline-by-Design protocols &amp; audit trails</span></li>
-      </ul>
+      <button class="btn" id="openModal">Request Consideration</button>
     </div>
 
-    <!-- PRINCIPLES -->
-    <div class="panel principles" aria-label="Principles: Truth, Sovereignty, Discipline">
-      <h3>Principles</h3>
-      <p class="principle-tags">Truth • Sovereignty • Discipline</p>
-      <svg viewBox="0 0 400 360" width="380" height="340" role="img">
-        <path class="tri-stroke" d="M200 20 L360 320 L40 320 Z"/>
-        <text class="tri-lbl" x="200" y="12">Truth</text>
-        <text class="tri-lbl" x="360" y="342">Sovereign</text>
-        <text class="tri-lbl" x="40"  y="342">Discipline</text>
+    <!-- Hero -->
+    <section class="grid hero">
+      <div>
+        <h1>Private AI for Critical<br/>Infrastructure</h1>
+        <p class="sub">
+          Sovereign, agentic systems that operate safely inside your perimeter, auditable, deterministic, and fit for regulated environments.
+        </p>
+        <ul class="bullets">
+          <li>Agentic automation with verifiable workflows</li>
+          <li>Offline / air-gapped options &amp; zero-leak policies</li>
+          <li>Discipline-by-Design protocols &amp; audit trails</li>
+        </ul>
+      </div>
+
+      <!-- Principles triangle -->
+      <aside class="triwrap">
+        <p class="trihead">Principles — Truth, Sovereignty, Discipline</p>
+        <svg class="tri" viewBox="0 0 320 280" role="img" aria-label="Triangle of principles">
+          <path d="M160 20 L20 250 L300 250 Z"/>
+          <text x="160" y="16" text-anchor="middle">Truth</text>
+          <text x="20" y="268" text-anchor="start">Discipline</text>
+          <text x="300" y="268" text-anchor="end">Sovereign</text>
+        </svg>
+      </aside>
+    </section>
+
+    <!-- Capabilities -->
+    <section class="grid caps" style="margin-top:28px">
+      <div class="panel cap">
+        <h3>Agentic Workflows</h3>
+        <p>Multi-tool execution with explicit guardrails.</p>
+      </div>
+      <div class="panel cap">
+        <h3>Workflow Memory</h3>
+        <p>No repeat mistakes; evidence-linked steps.</p>
+      </div>
+      <div class="panel cap">
+        <h3>Sovereign Compute</h3>
+        <p>Private models; on-prem and offline options.</p>
+      </div>
+      <div class="panel cap">
+        <h3>Discipline Protocols</h3>
+        <p>CAPA, sign-offs, and traceable audit trails.</p>
+      </div>
+    </section>
+
+    <!-- KPIs -->
+    <section class="grid kpis">
+      <div class="panel kpi">
+        <h4>Orchestration latency (p95)</h4>
+        <small>280 ms</small>
+      </div>
+      <div class="panel kpi">
+        <h4>Determinism on gated flows</h4>
+        <small>99.1%</small>
+      </div>
+      <div class="panel kpi">
+        <h4>Step-level logging coverage</h4>
+        <small>100%</small>
+      </div>
+      <div class="panel kpi">
+        <h4>Offline uptime (edge)</h4>
+        <small>&gt; 99.95%</small>
+      </div>
+    </section>
+
+    <!-- Benchmark chart -->
+    <section class="chart" aria-labelledby="benchTitle" style="margin-top:4px">
+      <div class="legend">
+        <span class="lg"><span class="dot b1"></span>Baseline (100)</span>
+        <span class="lg"><span class="dot b2"></span>Aegis</span>
+      </div>
+      <svg viewBox="0 0 820 280" aria-describedby="benchCaption">
+        <!-- gridlines -->
+        <g stroke="#1f2a3a" stroke-width="1">
+          <line x1="70" y1="230" x2="790" y2="230"/>
+          <line x1="70" y1="180" x2="790" y2="180"/>
+          <line x1="70" y1="130" x2="790" y2="130"/>
+          <line x1="70" y1="80"  x2="790" y2="80"/>
+        </g>
+        <!-- axes labels -->
+        <g class="axis">
+          <text x="70"  y="248">Latency*</text>
+          <text x="230" y="248">Determinism</text>
+          <text x="390" y="248">Audit</text>
+          <text x="550" y="248">Throughput</text>
+          <text x="710" y="248">Uptime</text>
+        </g>
+        <!-- bars (Baseline=100 at y=160; higher is better; latency is inverted in index) -->
+        <!-- Baseline -->
+        <g fill="#6b7a8d">
+          <rect x="90"  y="160" width="40" height="70" rx="3"/>
+          <rect x="250" y="160" width="40" height="70" rx="3"/>
+          <rect x="410" y="160" width="40" height="70" rx="3"/>
+          <rect x="570" y="160" width="40" height="70" rx="3"/>
+          <rect x="730" y="160" width="40" height="70" rx="3"/>
+        </g>
+        <!-- Aegis -->
+        <g fill="#cfd9e8">
+          <rect x="140" y="90"  width="40" height="140" rx="3"/> <!-- Latency index (inverted) -->
+          <rect x="300" y="70"  width="40" height="160" rx="3"/> <!-- Determinism -->
+          <rect x="460" y="60"  width="40" height="170" rx="3"/> <!-- Audit -->
+          <rect x="620" y="100" width="40" height="130" rx="3"/> <!-- Throughput -->
+          <rect x="780" y="40"  width="40" height="190" rx="3"/> <!-- Uptime -->
+        </g>
       </svg>
-    </div>
-  </section>
-
-  <!-- KPI tiles -->
-  <section>
-    <div class="kpis">
-      <div class="kpi"><div class="label">Orchestration latency (p95)</div><div class="value">280 ms</div></div>
-      <div class="kpi"><div class="label">Determinism on gated flows</div><div class="value">99.1%</div></div>
-      <div class="kpi"><div class="label">Step-level logging coverage</div><div class="value">100%</div></div>
-      <div class="kpi"><div class="label">Offline uptime (edge)</div><div class="value">&gt; 99.95%</</div></div>
-    </div>
-
-    <!-- Chart -->
-    <div class="chart-wrap">
-      <canvas id="benchChart" height="170" aria-label="Benchmark index chart"></canvas>
-      <p class="axis-note">
+      <p id="benchCaption" class="sub" style="margin:6px 0 0">
         * Latency is inverted in the index (higher is better). Values are representative and workload-adjusted. Baseline = 100.
       </p>
+    </section>
+  </div>
+
+  <!-- Modal form -->
+  <div class="modal" id="modal">
+    <div class="scrim" role="button" aria-label="Close"></div>
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="rfchead">
+      <button class="x" id="closeModal" aria-label="Close">×</button>
+      <h2 id="rfchead">Request Consideration</h2>
+      <p class="sub" style="margin:0 0 14px">Tell us the basics. We’ll follow up securely.</p>
+      <form id="rfcForm">
+        <div>
+          <label>Full name
+            <input type="text" name="name" autocomplete="name" />
+          </label>
+        </div>
+        <div>
+          <label>Work email
+            <input type="email" name="email" autocomplete="email" />
+          </label>
+        </div>
+        <div>
+          <label>Organization
+            <input type="text" name="org" autocomplete="organization" />
+          </label>
+        </div>
+        <div>
+          <label>Organization type
+            <select name="org_type">
+              <option value="" selected hidden></option>
+              <option>Government</option>
+              <option>Regulated enterprise</option>
+              <option>Critical infrastructure operator</option>
+              <option>Private company</option>
+              <option>Other</option>
+            </select>
+          </label>
+        </div>
+        <div>
+          <label>Role / title
+            <input type="text" name="role" />
+          </label>
+        </div>
+        <div>
+          <label>Region / jurisdiction
+            <input type="text" name="region" />
+          </label>
+        </div>
+        <label>Objective (high-level)
+          <textarea name="objective"></textarea>
+        </label>
+        <div class="submit">
+          <button type="button" class="btn" id="cancel">Cancel</button>
+          <button type="submit" class="btn primary">Submit</button>
+        </div>
+      </form>
     </div>
-  </section>
+  </div>
 
-  <!-- REQUEST FORM -->
-  <section id="request" class="request">
-    <div class="form-head">
-      <div class="squares">
-        <span class="square"></span><span class="square"></span><span class="square"></span>
-      </div>
-      <h2 style="margin:0;font-size:1.25rem">Request Consideration</h2>
-      <div class="squares">
-        <span class="square"></span><span class="square"></span><span class="square"></span>
-      </div>
-    </div>
+  <script>
+    // Modal controls
+    const modal = document.getElementById('modal');
+    const openBtn = document.getElementById('openModal');
+    const closeBtn = document.getElementById('closeModal');
+    const cancelBtn = document.getElementById('cancel');
+    modal.addEventListener('click', e=>{
+      if(e.target.classList.contains('scrim')) modal.classList.remove('open');
+    });
+    [openBtn, closeBtn, cancelBtn].forEach(el=>{
+      if(el) el.addEventListener('click', ()=> modal.classList.toggle('open'));
+    });
 
-    <form method="post" action="/api/request">
-      <div class="honeypot">
-        <label>Leave this field empty<input type="text" name="aegis_hp"></label>
-      </div>
-
-      <div class="row">
-        <div>
-          <label for="name">Full name</label>
-          <input id="name" name="name" required autocomplete="name" />
-        </div>
-        <div>
-          <label for="email">Work email</label>
-          <input id="email" type="email" name="email" required autocomplete="email" />
-        </div>
-      </div>
-
-      <div class="row">
-        <div>
-          <label for="org">Organization</label>
-          <input id="org" name="organization" required />
-        </div>
-        <div>
-          <label for="orgType">Organization type</label>
-          <select id="orgType" name="orgType" required>
-            <option value="" disabled selected>Select organization type</option>
-            <option>Government</option>
-            <option>Regulated enterprise</option>
-            <option>Critical infrastructure operator</option>
-            <option>Private company</option>
-            <option>Other</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="row">
-        <div>
-          <label for="role">Role / title</label>
-          <input id="role" name="role"/>
-        </div>
-        <div>
-          <label for="region">Region / jurisdiction</label>
-          <input id="region" name="region"/>
-        </div>
-      </div>
-
-      <label for="objective">Objective (high-level)</label>
-      <textarea id="objective" name="objective" placeholder="One paragraph is enough."></textarea>
-
-      <button class="submit" type="submit">Submit</button>
-    </form>
-  </section>
-</main>
-
-<footer class="wrap">
-  We work with teams whose work matters and whose bar is high.
-</footer>
-
-<!-- Chart.js (CDN). If unavailable, UI still renders without the chart. -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-<script>
-(function(){
-  if (!window.Chart) return;
-  const labels = ['Latency*','Determinism','Audit','Throughput','Uptime'];
-  const baseline = [100,100,100,100,100];
-  // Non-uniform Aegis deltas to signal precision advantage
-  const aegis    = [185,200,215,160,225];
-
-  const ctx = document.getElementById('benchChart').getContext('2d');
-  new Chart(ctx,{
-    type:'bar',
-    data:{
-      labels,
-      datasets:[
-        { label:'Baseline', data:baseline, backgroundColor:'rgba(120,136,156,.55)', borderColor:'rgba(120,136,156,.65)', borderWidth:1 },
-        { label:'Aegis',    data:aegis,    backgroundColor:'rgba(232,229,222,.88)', borderColor:'rgba(232,229,222,1)',   borderWidth:1 }
-      ]
-    },
-    options:{
-      responsive:true,
-      plugins:{
-        legend:{ labels:{ color:'#cdd4df' } },
-        tooltip:{ intersect:false, mode:'index' }
-      },
-      scales:{
-        x:{ ticks:{ color:'#a9b2bf' }, grid:{ color:'rgba(255,255,255,0.045)'} },
-        y:{ ticks:{ color:'#a9b2bf' }, grid:{ color:'rgba(255,255,255,0.045)' }, suggestedMin:80, suggestedMax:240 }
-      }
-    }
-  });
-})();
-</script>
+    // (Placeholder submit handler — replace with your backend endpoint)
+    document.getElementById('rfcForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      alert('Thanks. We received your request.');
+      modal.classList.remove('open');
+      e.target.reset();
+    });
+  </script>
 </body>
 </html>
