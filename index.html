@@ -5,176 +5,305 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Aegis Systems — Private AI for Critical Infrastructure</title>
   <meta name="description" content="Sovereign, agentic AI systems that operate safely inside your perimeter — auditable, deterministic, and fit for regulated environments." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%23A0B5FF' d='M32 6l18 8v14c0 11-8 21-18 24C22 49 14 39 14 28V14l18-8z'/%3E%3C/svg%3E" />
   <style>
     :root{
-      --bg:#0b1018; --panel:#0f1520; --muted:#8aa0b2; --text:#dbe9f6; --hi:#86b3ff;
-      --line:#1b2331; --chip:#151c28; --grad1:#8b8bff; --grad2:#ff6a8b; --brand:#7aa2ff;
-      --accent:#1f2937; --ring:rgba(134,179,255,.25);
+      --bg:#0b1118; --panel:#101826; --line:#1a2433; --muted:#94a3b8; --text:#e6edf3;
+      --hi:#a78bfa; --hi2:#fb7185; --ring:0 0 0 1px rgba(167,139,250,.25),0 8px 20px rgba(2,6,23,.6);
+      --radius:14px;
     }
-    *{box-sizing:border-box} html,body{height:100%}
-    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
-    a{color:inherit;text-decoration:none}
-    .wrap{max-width:1120px;margin:0 auto;padding:24px 20px 80px}
-    /* top bar */
-    .top{display:flex;align-items:center;justify-content:space-between;padding:6px 0 18px;border-bottom:1px solid var(--line);position:sticky;top:0;background:linear-gradient(to bottom,var(--bg),rgba(11,16,24,.85));backdrop-filter:saturate(120%) blur(6px);z-index:5}
-    .brand{display:flex;gap:10px;align-items:center;font-weight:600}
-    .badge{width:18px;height:18px;border:1px solid #2b3b55;border-radius:4px;background:linear-gradient(145deg,#1b2230,#0e1420)}
-    .cta{padding:10px 16px;border:1px solid #2b3b55;border-radius:10px;background:var(--chip);color:var(--hi);box-shadow:0 0 0 0 var(--ring);transition:.2s}
-    .cta:hover{box-shadow:0 0 0 6px var(--ring)}
+    *{box-sizing:border-box}
+    html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif}
+    a{color:#9cc2ff;text-decoration:none}
+    .container{max-width:1150px;margin:0 auto;padding:28px 22px}
+    header{position:sticky;top:0;backdrop-filter:saturate(1.2) blur(6px);background:rgba(11,17,24,.6);z-index:50;border-bottom:1px solid var(--line)}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:650}
+    .shield{width:22px;height:22px;background:linear-gradient(145deg,#7aa0ff,#a78bfa);border-radius:6px;box-shadow:var(--ring)}
+    .topbar{display:flex;align-items:center;justify-content:space-between}
+    .cta{padding:10px 16px;border-radius:12px;background:linear-gradient(145deg,#7aa0ff,#a78bfa 55%,#fb7185);color:#0b1118;border:1px solid #2a3350;font-weight:650;box-shadow:var(--ring)}
+    .cta:hover{filter:brightness(1.08)}
     /* hero */
-    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;padding:40px 0}
-    .h1{font-size:48px;line-height:1.05;margin:6px 0 14px}
-    .lead{color:var(--muted);max-width:52ch}
-    .buttons{display:flex;gap:14px;margin:22px 0 18px}
-    .btn{padding:12px 16px;border-radius:12px;border:1px solid #2b3b55;background:#121a28}
-    .btn.primary{background:#121a28;color:var(--hi)}
-    .list{margin:6px 0 0 2px;color:#a6bfd3;font-size:14px}
-    .list li{margin:6px 0}
+    .hero{display:grid;grid-template-columns:1.2fr .9fr;gap:28px;align-items:center;padding:28px 0}
+    h1{font-size:clamp(34px,4.1vw,56px);line-height:1.03;margin:0 0 10px}
+    .lede{color:var(--muted);max-width:62ch;margin:6px 0 18px}
+    .bullets{margin:10px 0 0 0;padding:0 0 0 20px;color:var(--muted)}
+    .btnrow{display:flex;gap:14px;margin:14px 0 6px}
+    .btn{padding:10px 14px;border:1px solid #2a3350;border-radius:12px;background:var(--panel);color:var(--text)}
+    .btn:hover{border-color:#3b4a66}
+    /* panel grid */
+    .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius)}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+    .card{padding:18px;border-radius:var(--radius);border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.02),transparent)}
+    .card h3{margin:0 0 6px;font-size:18px}
+    .muted{color:var(--muted)}
+    /* KPI tiles */
+    .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0 8px}
+    .kpi{padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+    .kpi .label{font-weight:650;margin-bottom:2px}
+    .kpi .val{font-size:13px;color:var(--muted)}
     /* triangle */
-    .tri{display:flex;align-items:center;justify-content:center}
-    .tri svg{max-width:340px;width:100%}
-    .tri h3{text-align:center;margin:8px 0 2px;font-weight:600}
-    .tri .caps{color:#9fb7cb;text-align:center;margin-bottom:8px}
-    /* capabilities matrix */
-    .section{padding:30px 0;border-top:1px solid var(--line);margin-top:8px}
-    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-    .card{background:var(--panel);border:1px solid #172033;border-radius:14px;padding:16px}
-    .card h4{margin:4px 0 6px;font-size:16px}
-    .card p{margin:0;color:#a8bfd3;font-size:14px}
-    /* KPI strip */
-    .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
-    .kpi{background:var(--chip);border:1px solid #1c2536;border-radius:12px;padding:12px}
-    .kpi .v{font-weight:700;font-size:18px}
-    .kpi .l{color:#93a9bc;font-size:12px}
-    /* chart */
-    .chart{margin-top:12px;background:var(--panel);border:1px solid #172033;border-radius:14px;padding:12px}
-    .muted{color:#97afc3}
-    /* credo */
-    .credo{padding:36px 0 4px;text-align:center;color:#9fb7cb}
-    @media(max-width:980px){.hero{grid-template-columns:1fr}.tri{order:2}.tri svg{max-width:300px}}
+    .tri-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+    .tri-title{font-weight:700}
+    svg.tri{max-width:400px;width:100%;height:auto}
+    /* bar chart */
+    .chart{padding:18px}
+    .chart h4{margin:0 0 10px}
+    .foot{font-size:12px;color:var(--muted);margin-top:6px}
+    /* modal */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(3,6,12,.6)}
+    .modal.open{display:flex}
+    .sheet{width:min(720px,92vw);background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px}
+    .sheet h2{margin:0 0 10px}
+    .form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .form label{font-size:13px;color:var(--muted)}
+    .form input,.form textarea, .form select{
+      width:100%;padding:10px;border-radius:10px;border:1px solid #2a3350;background:#0d1521;color:var(--text)
+    }
+    .form textarea{min-height:90px;grid-column:1/-1}
+    .row{grid-column:1/-1;display:flex;gap:10px;justify-content:flex-end}
+    .ghost{background:transparent;border:1px solid #2a3350;color:var(--text)}
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr}
+      .kpis{grid-template-columns:1fr 1fr}
+      .grid{grid-template-columns:1fr}
+      .form{grid-template-columns:1fr}
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <!-- Top -->
-    <div class="top">
-      <div class="brand"><span class="badge"></span><span>Aegis Systems</span></div>
-      <a class="cta" href="#consideration">Request Consideration</a>
+  <!-- Header -->
+  <header>
+    <div class="container topbar">
+      <div class="brand"><div class="shield"></div>Aegis Systems</div>
+      <button class="cta" id="openForm">Request Consideration</button>
     </div>
+  </header>
 
+  <main class="container">
     <!-- Hero -->
-    <section class="hero" aria-label="intro">
+    <section class="hero">
       <div>
-        <h1 class="h1">Private AI for Critical Infrastructure</h1>
-        <p class="lead">
+        <h1>Private AI for Critical<br/>Infrastructure</h1>
+        <p class="lede">
           Sovereign, agentic systems that operate safely inside your perimeter — auditable,
           deterministic, and fit for regulated environments.
         </p>
-        <div class="buttons">
-          <a class="btn primary" href="#consideration">Request Consideration</a>
-          <a class="btn" href="#capabilities">See capabilities</a>
+
+        <div class="btnrow">
+          <button class="cta" id="openForm2">Request Consideration</button>
         </div>
-        <ul class="list">
+
+        <ul class="bullets">
           <li>Agentic automation with verifiable workflows</li>
-          <li>Offline / air-gapped options & zero-leak policies</li>
-          <li>Discipline-by-Design protocols & audit trails</li>
+          <li>Offline / air-gapped options &amp; zero-leak policies</li>
+          <li>Discipline-by-Design protocols &amp; audit trails</li>
         </ul>
       </div>
 
-      <!-- Triangle -->
-      <div class="tri">
-        <div>
-          <h3>Principles</h3>
-          <div class="caps">Truth • Sovereignty • Discipline</div>
-          <svg viewBox="0 0 220 210" role="img" aria-label="Aegis principle triangle">
-            <defs>
-              <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-                <stop stop-color="#8b8bff"/>
-                <stop offset="1" stop-color="#ff6a8b"/>
-              </linearGradient>
-            </defs>
-            <polygon points="110,10 20,190 200,190" fill="none" stroke="url(#g)" stroke-width="2"/>
-            <text x="110" y="22" text-anchor="middle" fill="#a6b9cc" font-size="10">Truth</text>
-            <text x="18"  y="198" text-anchor="start"  fill="#a6b9cc" font-size="10">Discipline</text>
-            <text x="202" y="198" text-anchor="end"    fill="#a6b9cc" font-size="10">Sovereign</text>
-          </svg>
-        </div>
-      </div>
-    </section>
-
-    <!-- Capabilities -->
-    <section id="capabilities" class="section" aria-label="capabilities">
-      <div class="grid">
-        <div class="card"><h4>Agentic Workflows</h4><p>Multi-tool execution with explicit guardrails.</p></div>
-        <div class="card"><h4>Workflow Memory</h4><p>No repeat mistakes; evidence-linked steps.</p></div>
-        <div class="card"><h4>Sovereign Compute</h4><p>Private models; on-prem and offline options.</p></div>
-        <div class="card"><h4>Discipline Protocols</h4><p>CAPA, sign-offs, and traceable audit trails.</p></div>
-      </div>
-
-      <!-- CTO-facing, safe signals -->
-      <div class="kpis" aria-label="operational signals">
-        <div class="kpi"><div class="v">p95 280ms</div><div class="l">Orchestration latency</div></div>
-        <div class="kpi"><div class="v">99.1%</div><div class="l">Determinism on gated flows</div></div>
-        <div class="kpi"><div class="v">100%</div><div class="l">Step-level logging coverage</div></div>
-        <div class="kpi"><div class="v">>99.95%</div><div class="l">Offline uptime (edge)</div></div>
-      </div>
-
-      <!-- Bar chart (generic, anonymous) -->
-      <div class="chart" aria-label="aggregate performance overview">
-        <div class="muted" style="font-size:13px;margin-bottom:6px">Aggregate performance (representative, workload-adjusted)</div>
-        <svg viewBox="0 0 640 200" width="100%" height="200" role="img" aria-label="bar chart">
-          <!-- axes -->
-          <line x1="60" y1="10" x2="60" y2="170" stroke="#2a3547"/>
-          <line x1="60" y1="170" x2="610" y2="170" stroke="#2a3547"/>
-          <!-- bars (values 0-100 scaled to height) -->
-          <g fill="url(#gradBar)">
-            <defs>
-              <linearGradient id="gradBar" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#8b8bff"/><stop offset="1" stop-color="#ff6a8b"/>
-              </linearGradient>
-            </defs>
-            <!-- labels -->
-            <text x="110" y="185" fill="#8ea6bb" font-size="11" text-anchor="middle">Latency</text>
-            <text x="230" y="185" fill="#8ea6bb" font-size="11" text-anchor="middle">Determinism</text>
-            <text x="350" y="185" fill="#8ea6bb" font-size="11" text-anchor="middle">Audit</text>
-            <text x="470" y="185" fill="#8ea6bb" font-size="11" text-anchor="middle">Throughput</text>
-            <text x="590" y="185" fill="#8ea6bb" font-size="11" text-anchor="middle">Uptime</text>
-            <!-- heights (invert y) -->
-            <rect x="90"  y="90"  width="40" height="80" />
-            <rect x="210" y="40"  width="40" height="130"/>
-            <rect x="330" y="30"  width="40" height="140"/>
-            <rect x="450" y="70"  width="40" height="100"/>
-            <rect x="570" y="20"  width="40" height="150"/>
-          </g>
-          <!-- value ticks -->
-          <g fill="#5f7a93" font-size="10">
-            <text x="44" y="173">0</text>
-            <text x="38" y="133">50</text>
-            <text x="32" y="93">100</text>
-            <text x="32" y="53">150</text>
-          </g>
-          <g stroke="#223043">
-            <line x1="60" y1="130" x2="610" y2="130"/>
-            <line x1="60" y1="90" x2="610" y2="90"/>
-            <line x1="60" y1="50" x2="610" y2="50"/>
-          </g>
+      <!-- Principles Triangle -->
+      <div class="tri-wrap panel">
+        <div class="tri-title">Principles</div>
+        <div class="muted">Truth • Sovereignty • Discipline</div>
+        <svg class="tri" viewBox="0 0 420 380" aria-label="Truth-Sovereignty-Discipline triangle">
+          <!-- edges -->
+          <defs>
+            <linearGradient id="edge" x1="0" x2="1">
+              <stop offset="0" stop-color="#a78bfa"/>
+              <stop offset="1" stop-color="#fb7185"/>
+            </linearGradient>
+          </defs>
+          <polygon points="210,30 70,330 350,330" fill="none" stroke="url(#edge)" stroke-width="4"/>
+          <!-- labels: exact vertices -->
+          <text x="210" y="22" text-anchor="middle" fill="#c7d2fe" font-size="14">Truth</text>
+          <text x="62" y="344" text-anchor="start" fill="#c7d2fe" font-size="14">Discipline</text>
+          <text x="358" y="344" text-anchor="end" fill="#c7d2fe" font-size="14">Sovereign</text>
         </svg>
       </div>
     </section>
 
-    <!-- Credo -->
-    <p class="credo"><em>We engage when your mission matters and your bar is high.</em></p>
-
-    <!-- Consideration anchor (replace href/mail as needed) -->
-    <section id="consideration" class="section" aria-label="request consideration">
-      <div class="card" style="display:flex;align-items:center;justify-content:space-between;gap:12px">
-        <div>
-          <h4 style="margin:0 0 6px">Request Consideration</h4>
-          <p style="margin:0;color:#9fb2c6">If the work is real and standards are higher, we’ll respond.</p>
-        </div>
-        <a class="cta" href="mailto:contact@aegis-systems.global?subject=Request%20Consideration">Email dossier →</a>
+    <!-- Capability cards (minimal, no extra button) -->
+    <section class="grid">
+      <div class="card">
+        <h3>Agentic Workflows</h3>
+        <p class="muted">Multi-tool execution with explicit guardrails.</p>
+      </div>
+      <div class="card">
+        <h3>Workflow Memory</h3>
+        <p class="muted">No repeat mistakes; evidence-linked steps.</p>
+      </div>
+      <div class="card">
+        <h3>Sovereign Compute</h3>
+        <p class="muted">Private models; on-prem and offline options.</p>
+      </div>
+      <div class="card">
+        <h3>Discipline Protocols</h3>
+        <p class="muted">CAPA, sign-offs, and traceable audit trails.</p>
       </div>
     </section>
+
+    <!-- KPIs -->
+    <section class="kpis">
+      <div class="kpi">
+        <div class="label">Orchestration latency (p95)</div>
+        <div class="val">280 ms</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Determinism on gated flows</div>
+        <div class="val">99.1%</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Step-level logging coverage</div>
+        <div class="val">100%</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Offline uptime (edge)</div>
+        <div class="val">&gt; 99.95%</div>
+      </div>
+    </section>
+
+    <!-- Comparative bar chart -->
+    <section class="panel chart">
+      <h4>Benchmark index (Baseline = 100)</h4>
+      <svg viewBox="0 0 840 260" width="100%" height="auto" role="img" aria-label="Baseline vs Aegis performance index">
+        <!-- axes -->
+        <line x1="70" y1="20" x2="70" y2="220" stroke="#263247"/>
+        <line x1="70" y1="220" x2="810" y2="220" stroke="#263247"/>
+        <!-- y ticks -->
+        <g fill="#4b5b78" font-size="11">
+          <text x="45" y="224">0</text>
+          <text x="38" y="184">50</text>
+          <text x="33" y="144">100</text>
+          <text x="28" y="104">150</text>
+          <text x="28" y="64">200</text>
+        </g>
+        <!-- grid -->
+        <g stroke="#1e2a3d" stroke-dasharray="2 4">
+          <line x1="70" y1="180" x2="810" y2="180"/>
+          <line x1="70" y1="140" x2="810" y2="140"/>
+          <line x1="70" y1="100" x2="810" y2="100"/>
+          <line x1="70" y1="60"  x2="810" y2="60"/>
+        </g>
+        <!-- bars: for each category show baseline then aegis -->
+        <g>
+          <!-- helper to compute y: 220 - value -->
+          <!-- Latency (inverted: higher is better) baseline=100, aegis=155 -->
+          <g transform="translate(110,0)">
+            <rect x="0"   y="120" width="38" height="100" fill="#22324b" />
+            <rect x="48"  y="65"  width="38" height="155" fill="url(#grad)"/>
+            <text x="20" y="238" fill="#8aa0c6" font-size="12">Latency*</text>
+          </g>
+          <!-- Determinism baseline=100, aegis=160 -->
+          <g transform="translate(280,0)">
+            <rect x="0"   y="120" width="38" height="100" fill="#22324b" />
+            <rect x="48"  y="60"  width="38" height="160" fill="url(#grad)"/>
+            <text x="4" y="238" fill="#8aa0c6" font-size="12">Determinism</text>
+          </g>
+          <!-- Auditability baseline=100, aegis=170 -->
+          <g transform="translate(470,0)">
+            <rect x="0"   y="120" width="38" height="100" fill="#22324b" />
+            <rect x="48"  y="50"  width="38" height="170" fill="url(#grad)"/>
+            <text x="2" y="238" fill="#8aa0c6" font-size="12">Audit</text>
+          </g>
+          <!-- Throughput baseline=100, aegis=130 -->
+          <g transform="translate(620,0)">
+            <rect x="0"   y="120" width="38" height="100" fill="#22324b" />
+            <rect x="48"  y="90"  width="38" height="130" fill="url(#grad)"/>
+            <text x="-4" y="238" fill="#8aa0c6" font-size="12">Throughput</text>
+          </g>
+          <!-- Uptime baseline=100, aegis=180 -->
+          <g transform="translate(770,0)">
+            <rect x="0"   y="120" width="38" height="100" fill="#22324b" />
+            <rect x="48"  y="40"  width="38" height="180" fill="url(#grad)"/>
+            <text x="4" y="238" fill="#8aa0c6" font-size="12">Uptime</text>
+          </g>
+        </g>
+        <defs>
+          <linearGradient id="grad" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0" stop-color="#fb7185"/>
+            <stop offset="1" stop-color="#a78bfa"/>
+          </linearGradient>
+        </defs>
+        <!-- legend -->
+        <g font-size="12">
+          <rect x="670" y="28" width="14" height="14" fill="#22324b"/><text x="690" y="40" fill="#9db3d6">Baseline</text>
+          <rect x="670" y="48" width="14" height="14" fill="url(#grad)"/><text x="690" y="60" fill="#9db3d6">Aegis</text>
+        </g>
+      </svg>
+      <div class="foot">* Latency is inverted in the index so higher is better. Values are representative and workload-adjusted.</div>
+    </section>
+  </main>
+
+  <!-- Modal Form -->
+  <div class="modal" id="modal">
+    <div class="sheet">
+      <h2>Request Consideration</h2>
+      <p class="muted" style="margin-top:-2px">We engage when your mission is serious and your bar is high.</p>
+      <form class="form" id="rcForm">
+        <div>
+          <label>Full name</label>
+          <input required name="name" autocomplete="name">
+        </div>
+        <div>
+          <label>Work email</label>
+          <input required type="email" name="email" autocomplete="email">
+        </div>
+        <div>
+          <label>Organization</label>
+          <input name="org">
+        </div>
+        <div>
+          <label>Role</label>
+          <input name="role">
+        </div>
+        <div>
+          <label>Environment</label>
+          <select name="env">
+            <option>On-prem</option><option>Air-gapped</option><option>Cloud (private)</option>
+          </select>
+        </div>
+        <div>
+          <label>Security class</label>
+          <select name="sec"><option>Regulated</option><option>Gov/Defense</option><option>Critical infra</option></select>
+        </div>
+        <textarea name="brief" placeholder="Brief statement of mission, constraints, and success criteria (5-10 lines)."></textarea>
+        <div class="row">
+          <button type="button" class="btn ghost" id="cancel">Cancel</button>
+          <button class="cta" type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
   </div>
+
+  <script>
+    // Open/close modal
+    const modal = document.getElementById('modal');
+    const openers = [document.getElementById('openForm'), document.getElementById('openForm2')];
+    openers.forEach(b => b && b.addEventListener('click', ()=>modal.classList.add('open')));
+    document.getElementById('cancel').addEventListener('click', ()=>modal.classList.remove('open'));
+    modal.addEventListener('click', (e)=>{ if(e.target === modal) modal.classList.remove('open'); });
+
+    // Mailto submit (static-site friendly)
+    document.getElementById('rcForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const data = new FormData(e.target);
+      const lines = [
+        'Aegis Systems — Request Consideration',
+        '',
+        `Name: ${data.get('name')}`,
+        `Email: ${data.get('email')}`,
+        `Organization: ${data.get('org') || '—'}`,
+        `Role: ${data.get('role') || '—'}`,
+        `Environment: ${data.get('env')}`,
+        `Security class: ${data.get('sec')}`,
+        '',
+        'Brief:',
+        (data.get('brief') || '—')
+      ];
+      const subject = encodeURIComponent('Request Consideration — Aegis Systems');
+      const body = encodeURIComponent(lines.join('\n'));
+      window.location.href = `mailto:contact@aegis-systems.global?subject=${subject}&body=${body}`;
+      modal.classList.remove('open');
+    });
+  </script>
 </body>
 </html>
