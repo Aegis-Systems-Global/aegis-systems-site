@@ -1,293 +1,287 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Aegis Systems — Private AI for Critical Infrastructure</title>
-  <meta name="description" content="Sovereign, agentic AI systems that operate safely inside your perimeter — auditable, deterministic, and fit for regulated environments.">
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg:#0A1018;          /* page black */
-      --panel:#101620;       /* dark panel */
-      --border:#1c2533;      /* panel border */
-      --text:#E8E5DE;        /* bone white */
-      --muted:#9AA4B2;       /* secondary text */
-      --muted2:#cdd4df;      /* tertiary */
-      --focus:#E8E5DE;
-      --square:#ffffff;      /* pure white squares */
-      --accent:#E8E5DE;      /* mono accent */
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      background:var(--bg);
-      color:var(--text);
-      font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      line-height:1.45;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
-    a{color:var(--text);text-decoration:none}
-    .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Aegis Systems</title>
+<style>
+  :root{
+    --bg:#0c1117; --panel:#0f1620; --ink:#e6f0ff; --muted:#9fb0c3; --line:#cfd9e6;
+    --edge:#1e2633; --brand:#bcd3ff;
+    --accent:#7aa2ff; --accent-2:#96a7ff; --baseline:#2c3a50;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,Segoe UI,Inter,Roboto,Helvetica,Arial,sans-serif}
 
-    /* Header */
-    header{
-      position:sticky;top:0;z-index:10;
-      background:linear-gradient(180deg, rgba(10,16,24,.95), rgba(10,16,24,.86));
-      backdrop-filter:saturate(120%) blur(4px);
-      border-bottom:1px solid var(--border);
-    }
-    .nav{
-      display:flex;align-items:center;justify-content:space-between;
-      min-height:64px;
-    }
-    .brand{display:flex;align-items:center;gap:16px}
-    .squares{display:flex;gap:6px}
-    .square{
-      width:8px;height:8px;background:var(--square);border-radius:2px;opacity:.95;
-    }
-    .brandname{
-      font-weight:800;font-size:1.25rem;letter-spacing:.3px;
-      display:flex;align-items:center;gap:14px;
-    }
-    .cta{
-      padding:10px 16px;border-radius:12px;border:1px solid var(--border);
-      background:transparent;color:var(--text);font-weight:600;
-    }
-    .cta:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+  /* top bar */
+  .top{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 28px; background:linear-gradient(180deg, rgba(12,17,23,.95), rgba(12,17,23,.60));
+    backdrop-filter:saturate(120%) blur(8px); border-bottom:1px solid #0d141c;
+  }
+  .brand{
+    display:flex; align-items:center; gap:14px; font-weight:700; letter-spacing:.2px; font-size:20px;
+  }
+  .dots{display:inline-grid; grid:auto / repeat(3,8px); gap:6px}
+  .dot{width:8px; height:8px; background:#fff; border-radius:2px; opacity:.9}
+  .cta{
+    appearance:none; border:1px solid var(--line); background:linear-gradient(180deg,#182233,#131a26);
+    color:var(--ink); padding:10px 16px; border-radius:12px; font-weight:600; cursor:pointer;
+    box-shadow:0 0 0 1px rgba(255,255,255,.06) inset, 0 6px 20px rgba(0,0,0,.3);
+  }
+  .cta:hover{border-color:#e7f1ff; box-shadow:0 0 0 1px #e7f1ff inset, 0 10px 28px rgba(122,162,255,.18)}
+  .wrap{max-width:1180px; margin:0 auto; padding:40px 24px 96px}
 
-    /* Hero */
-    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;padding:56px 0 32px}
-    .h-title{font-size:3rem;line-height:1.05;margin:0 0 12px;font-weight:800}
-    .h-sub{color:var(--muted);max-width:54ch;margin-bottom:8px}
-    .bullets{margin:18px 0 0 2px;padding:0;list-style:none}
-    .bullets li{display:flex;gap:10px;margin:12px 0;color:var(--text)}
-    .b-sq{width:10px;height:10px;background:#fff;border-radius:2px;flex:0 0 10px;margin-top:6px}
+  /* hero */
+  .hero{display:grid; grid-template-columns:1.05fr .95fr; gap:40px; align-items:center}
+  .h1{margin:10px 0 12px; font-size:clamp(28px,4.6vw,56px); line-height:1.05; font-weight:800; letter-spacing:.3px}
+  .sub{color:var(--muted); max-width:58ch; margin-bottom:18px}
+  .list{margin:16px 0 0; padding:0; list-style:none}
+  .list li{display:flex; gap:12px; align-items:flex-start; margin:12px 0; color:#e9f2ff}
+  .sq{margin-top:5px; width:10px; height:10px; background:#fff; border-radius:2px; flex:0 0 10px}
 
-    /* Principles triangle */
-    .panel{
-      background:transparent;border:0;box-shadow:none;border-radius:14px;padding:8px;
-    }
-    .principles h3{margin:0 0 6px;font-size:1rem;color:var(--text);opacity:.9;text-align:center}
-    .principle-tags{margin:0 0 8px;text-align:center;color:var(--muted)}
-    .tri-lbl{fill:var(--text);font-size:14px;opacity:.9;text-anchor:middle;font-family:Inter,system-ui,sans-serif}
-    .tri-stroke{stroke:var(--accent);stroke-width:3;fill:none}
+  /* triangle card */
+  .card{background:var(--panel); border:1px solid #0e1620; border-radius:16px; padding:22px 22px 8px}
+  .card h3{margin:0 0 6px; font-size:14px; color:var(--muted); font-weight:700; letter-spacing:.2px}
+  .tri-wrap{position:relative; aspect-ratio:1.2/1; margin-top:8px}
+  .tri{position:absolute; inset:12px}
+  .tri svg{width:100%; height:100%}
+  .tri text{fill:#d7e5ff; font-size:12px}
 
-    /* KPI tiles */
-    .kpis{display:grid;grid-template-columns:repeat(4,minmax(160px,1fr));gap:16px;margin:8px 0 18px}
-    .kpi{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
-    .kpi .label{font-weight:700;color:var(--text)}
-    .kpi .value{font-size:.95rem;opacity:.85;margin-top:4px;color:var(--muted2)}
+  /* capabilities + metrics */
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:42px}
+  .pill{
+    background:var(--panel); border:1px solid #0e1620; border-radius:14px; padding:16px 18px;
+    min-height:84px; display:flex; flex-direction:column; justify-content:center
+  }
+  .pill h4{margin:0 0 6px; font-size:16px}
+  .pill p{margin:0; color:var(--muted)}
+  .kpis{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:22px 0 10px}
+  .kpi{background:#0d1420; border:1px solid #0e1620; border-radius:12px; padding:14px}
+  .kpi .lbl{color:#cfe0ff; font-weight:700; font-size:13px; margin-bottom:6px}
+  .kpi .val{color:#9fb4d1; font-size:13px}
 
-    /* Chart section */
-    .chart-wrap{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px}
-    .axis-note{color:var(--muted);font-size:.9rem;margin:.6rem 0 0}
+  /* chart */
+  .chart-card{background:var(--panel); border:1px solid #0e1620; border-radius:16px; padding:18px; margin-top:14px}
+  .legend{display:flex; gap:18px; align-items:center; margin:6px 4px 12px}
+  .key{display:flex; align-items:center; gap:8px; color:#cfe0ff; font-size:13px}
+  .sw{width:18px; height:10px; border-radius:3px}
+  .sw.base{background:var(--baseline)}
+  .sw.aegis{background:linear-gradient(180deg,var(--accent-2),var(--accent))}
+  .chart{width:100%; height:320px}
+  .axis{stroke:#294059; stroke-width:1}
+  .bar{rx:6}
+  .label{fill:#cfe0ff; font-size:13px}
+  .note{color:#7f95b0; font-size:12px; margin-top:8px}
 
-    /* Form */
-    .request{padding:40px 0 80px}
-    .form-head{
-      display:flex;align-items:center;gap:14px;margin-bottom:10px
-    }
-    .form-head .squares .square{width:9px;height:9px}
-    form{
-      background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px;max-width:760px
-    }
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    label{display:block;font-weight:600;margin:10px 0 6px}
-    input,select,textarea{
-      width:100%;background:#0d141d;border:1px solid var(--border);
-      color:var(--text);border-radius:10px;padding:12px 12px;font-size:1rem
-    }
-    textarea{min-height:120px;resize:vertical}
-    .submit{
-      margin-top:16px;padding:12px 18px;border-radius:12px;border:1px solid var(--border);
-      background:transparent;color:var(--text);font-weight:700
-    }
-    .honeypot{position:absolute;left:-50000px}
-    footer{color:var(--muted);text-align:center;padding:40px 0 60px}
-
-    @media (max-width:980px){
-      .hero{grid-template-columns:1fr}
-      .h-title{font-size:2.4rem}
-      .kpis{grid-template-columns:1fr 1fr}
-      .row{grid-template-columns:1fr}
-    }
-  </style>
+  /* modal */
+  dialog{border:none; padding:0; border-radius:16px; width:min(720px,92vw); background:var(--panel); color:var(--ink)}
+  .modal-head{display:flex; justify-content:space-between; align-items:center; padding:16px 18px; border-bottom:1px solid #0e1620}
+  .modal-body{padding:18px}
+  .x{all:unset; cursor:pointer; color:#d0dff7}
+  form{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+  form .full{grid-column:1/-1}
+  label{font-size:13px; color:#cfe0ff}
+  input,select,textarea{
+    width:100%; margin-top:6px; padding:12px 12px; border-radius:10px; color:var(--ink);
+    background:#0d1420; border:1px solid #0e1620
+  }
+  textarea{min-height:110px; resize:vertical}
+  .actions{display:flex; gap:10px; justify-content:flex-end; margin-top:10px}
+  .ghost{background:#0d1420; border:1px solid #1a2a3f; color:#cfe0ff; padding:10px 14px; border-radius:10px}
+  .primary{background:linear-gradient(180deg,#182233,#131a26); border:1px solid var(--line); color:#fff; padding:10px 14px; border-radius:10px}
+  .overlay{position:fixed; inset:0; background:rgba(0,0,0,.5)}
+  @media (max-width:960px){
+    .hero{grid-template-columns:1fr; gap:24px}
+    .grid{grid-template-columns:1fr}
+    .kpis{grid-template-columns:1fr 1fr}
+  }
+</style>
 </head>
 <body>
 
-<header>
-  <div class="wrap nav">
-    <div class="brand">
-      <div class="squares">
-        <span class="square"></span><span class="square"></span><span class="square"></span>
-      </div>
-      <div class="brandname">
-        Aegis Systems
-        <div class="squares">
-          <span class="square"></span><span class="square"></span><span class="square"></span>
-        </div>
-      </div>
-    </div>
-    <a class="cta" href="#request">Request Consideration</a>
+<header class="top">
+  <div class="brand">
+    <span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>
+    Aegis Systems
+    <span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>
   </div>
+  <button class="cta" id="openReq">Request Consideration</button>
 </header>
 
 <main class="wrap">
-
   <!-- HERO -->
   <section class="hero">
     <div>
-      <h1 class="h-title">Private AI for Critical Infrastructure</h1>
-      <p class="h-sub">
-        Sovereign, agentic systems that operate safely inside your perimeter — auditable,
-        deterministic, and fit for regulated environments.
-      </p>
-
-      <ul class="bullets">
-        <li><span class="b-sq"></span><span>Agentic automation with verifiable workflows</span></li>
-        <li><span class="b-sq"></span><span>Offline / air-gapped options &amp; zero-leak policies</span></li>
-        <li><span class="b-sq"></span><span>Discipline-by-Design protocols &amp; audit trails</span></li>
+      <h1 class="h1">Private AI for Critical<br/>Infrastructure</h1>
+      <p class="sub">Sovereign, agentic systems that operate safely inside your perimeter — auditable, deterministic, and fit for regulated environments.</p>
+      <ul class="list">
+        <li><span class="sq"></span><span>Agentic automation with verifiable workflows</span></li>
+        <li><span class="sq"></span><span>Offline / air-gapped options & zero-leak policies</span></li>
+        <li><span class="sq"></span><span>Discipline-by-Design protocols & audit trails</span></li>
       </ul>
     </div>
 
-    <!-- PRINCIPLES -->
-    <div class="panel principles" aria-label="Principles: Truth, Sovereignty, Discipline">
+    <!-- Principles Triangle -->
+    <aside class="card">
       <h3>Principles</h3>
-      <p class="principle-tags">Truth • Sovereignty • Discipline</p>
-      <svg viewBox="0 0 400 360" width="380" height="340" role="img">
-        <path class="tri-stroke" d="M200 20 L360 320 L40 320 Z"/>
-        <text class="tri-lbl" x="200" y="12">Truth</text>
-        <text class="tri-lbl" x="360" y="342">Sovereign</text>
-        <text class="tri-lbl" x="40"  y="342">Discipline</text>
-      </svg>
+      <div class="tri-wrap">
+        <div class="tri">
+          <svg viewBox="0 0 300 280" aria-labelledby="triTitle">
+            <title id="triTitle">Truth • Sovereignty • Discipline</title>
+            <!-- triangle outline -->
+            <polygon points="150,20 280,250 20,250" fill="none" stroke="#ffffff" stroke-width="3" />
+            <!-- vertex labels -->
+            <text x="150" y="12" text-anchor="middle">Truth</text>
+            <text x="285" y="262">Sovereign</text>
+            <text x="12" y="262">Discipline</text>
+          </svg>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- Capabilities & Metrics -->
+  <section class="grid">
+    <div class="pill">
+      <h4>Agentic Workflows</h4>
+      <p>Multi-tool execution with explicit guardrails.</p>
+    </div>
+    <div class="pill">
+      <h4>Workflow Memory</h4>
+      <p>No repeat mistakes; evidence-linked steps.</p>
+    </div>
+    <div class="pill">
+      <h4>Sovereign Compute</h4>
+      <p>Private models; on-prem and offline options.</p>
+    </div>
+    <div class="pill">
+      <h4>Discipline Protocols</h4>
+      <p>CAPA, sign-offs, and traceable audit trails.</p>
     </div>
   </section>
 
   <!-- KPI tiles -->
-  <section>
-    <div class="kpis">
-      <div class="kpi"><div class="label">Orchestration latency (p95)</div><div class="value">280 ms</div></div>
-      <div class="kpi"><div class="label">Determinism on gated flows</div><div class="value">99.1%</div></div>
-      <div class="kpi"><div class="label">Step-level logging coverage</div><div class="value">100%</div></div>
-      <div class="kpi"><div class="label">Offline uptime (edge)</div><div class="value">&gt; 99.95%</</div></div>
-    </div>
-
-    <!-- Chart -->
-    <div class="chart-wrap">
-      <canvas id="benchChart" height="170" aria-label="Benchmark index chart"></canvas>
-      <p class="axis-note">
-        * Latency is inverted in the index (higher is better). Values are representative and workload-adjusted. Baseline = 100.
-      </p>
-    </div>
+  <section class="kpis">
+    <div class="kpi"><div class="lbl">Orchestration latency (p95)</div><div class="val">280 ms</div></div>
+    <div class="kpi"><div class="lbl">Determinism on gated flows</div><div class="val">99.1%</div></div>
+    <div class="kpi"><div class="lbl">Step-level logging coverage</div><div class="val">100%</div></div>
+    <div class="kpi"><div class="lbl">Offline uptime (edge)</div><div class="val">&gt; 99.95%</div></div>
   </section>
 
-  <!-- REQUEST FORM -->
-  <section id="request" class="request">
-    <div class="form-head">
-      <div class="squares">
-        <span class="square"></span><span class="square"></span><span class="square"></span>
-      </div>
-      <h2 style="margin:0;font-size:1.25rem">Request Consideration</h2>
-      <div class="squares">
-        <span class="square"></span><span class="square"></span><span class="square"></span>
-      </div>
+  <!-- Benchmark chart -->
+  <section class="chart-card">
+    <div class="legend">
+      <div class="key"><span class="sw base"></span>Baseline</div>
+      <div class="key"><span class="sw aegis"></span>Aegis</div>
     </div>
+    <svg class="chart" viewBox="0 0 820 320" role="img" aria-labelledby="chartTitle">
+      <title id="chartTitle">Benchmark index (Baseline = 100)</title>
+      <!-- axes -->
+      <line class="axis" x1="60" y1="280" x2="790" y2="280"/>
+      <line class="axis" x1="60" y1="40"  x2="60"  y2="280"/>
+      <!-- y labels -->
+      <g fill="#7f95b0" font-size="12">
+        <text x="30" y="284">0</text>
+        <text x="24" y="234">50</text>
+        <text x="18" y="184">100</text>
+        <text x="18" y="134">150</text>
+        <text x="18" y="84">200</text>
+      </g>
 
-    <form method="post" action="/api/request">
-      <div class="honeypot">
-        <label>Leave this field empty<input type="text" name="aegis_hp"></label>
-      </div>
+      <!-- bars (baseline fixed at 120 across sets for visual, Aegis varies) -->
+      <!-- categories -->
+      <g data-x="Latency" transform="translate(100,0)">
+        <rect class="bar" x="0"   y="200" width="46" height="80"  fill="var(--baseline)"/>
+        <rect class="bar" x="56"  y="120" width="46" height="160" fill="url(#aegisGrad)"/>
+        <text class="label" x="46" y="302" text-anchor="middle">Latency*</text>
+      </g>
+      <g data-x="Determinism" transform="translate(250,0)">
+        <rect class="bar" x="0"   y="200" width="46" height="80"  fill="var(--baseline)"/>
+        <rect class="bar" x="56"  y="100" width="46" height="180" fill="url(#aegisGrad)"/>
+        <text class="label" x="46" y="302" text-anchor="middle">Determinism</text>
+      </g>
+      <g data-x="Audit" transform="translate(400,0)">
+        <rect class="bar" x="0"   y="200" width="46" height="80"  fill="var(--baseline)"/>
+        <rect class="bar" x="56"  y="88"  width="46" height="192" fill="url(#aegisGrad)"/>
+        <text class="label" x="46" y="302" text-anchor="middle">Audit</text>
+      </g>
+      <g data-x="Throughput" transform="translate(550,0)">
+        <rect class="bar" x="0"   y="200" width="46" height="80"  fill="var(--baseline)"/>
+        <rect class="bar" x="56"  y="130" width="46" height="150" fill="url(#aegisGrad)"/>
+        <text class="label" x="46" y="302" text-anchor="middle">Throughput</text>
+      </g>
+      <g data-x="Uptime" transform="translate(700,0)">
+        <rect class="bar" x="0"   y="200" width="46" height="80"  fill="var(--baseline)"/>
+        <rect class="bar" x="56"  y="70"  width="46" height="210" fill="url(#aegisGrad)"/>
+        <text class="label" x="46" y="302" text-anchor="middle">Uptime</text>
+      </g>
 
-      <div class="row">
-        <div>
-          <label for="name">Full name</label>
-          <input id="name" name="name" required autocomplete="name" />
-        </div>
-        <div>
-          <label for="email">Work email</label>
-          <input id="email" type="email" name="email" required autocomplete="email" />
-        </div>
-      </div>
-
-      <div class="row">
-        <div>
-          <label for="org">Organization</label>
-          <input id="org" name="organization" required />
-        </div>
-        <div>
-          <label for="orgType">Organization type</label>
-          <select id="orgType" name="orgType" required>
-            <option value="" disabled selected>Select organization type</option>
-            <option>Government</option>
-            <option>Regulated enterprise</option>
-            <option>Critical infrastructure operator</option>
-            <option>Private company</option>
-            <option>Other</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="row">
-        <div>
-          <label for="role">Role / title</label>
-          <input id="role" name="role"/>
-        </div>
-        <div>
-          <label for="region">Region / jurisdiction</label>
-          <input id="region" name="region"/>
-        </div>
-      </div>
-
-      <label for="objective">Objective (high-level)</label>
-      <textarea id="objective" name="objective" placeholder="One paragraph is enough."></textarea>
-
-      <button class="submit" type="submit">Submit</button>
-    </form>
+      <!-- gradient -->
+      <defs>
+        <linearGradient id="aegisGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"  stop-color="var(--accent-2)"/>
+          <stop offset="100%" stop-color="var(--accent)"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <p class="note">Benchmark index (Baseline = 100). Latency is inverted in the index (higher is better). Values are representative and workload-adjusted.</p>
   </section>
 </main>
 
-<footer class="wrap">
-  We work with teams whose work matters and whose bar is high.
-</footer>
+<!-- Request Consideration (single entry via top button) -->
+<dialog id="req">
+  <div class="modal-head">
+    <strong>Request Consideration</strong>
+    <button class="x" aria-label="Close" id="closeReq">✕</button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div>
+        <label>Your Name<input required placeholder="Jane Doe"></label>
+      </div>
+      <div>
+        <label>Email<input type="email" required placeholder="jane@example.com"></label>
+      </div>
+      <div>
+        <label>Organization<input placeholder="Acme Energy"></label>
+      </div>
+      <div>
+        <label>Role<select>
+          <option>Government</option>
+          <option>Regulator</option>
+          <option>Critical Operator</option>
+          <option>Prime Contractor</option>
+          <option>Private Company</option>
+          <option>Other</option>
+        </select></label>
+      </div>
+      <div class="full">
+        <label>Context (brief)<textarea placeholder="Scope, constraints, objectives…"></textarea></label>
+      </div>
+      <div class="actions full">
+        <button type="button" class="ghost" id="cancelReq">Cancel</button>
+        <button type="submit" class="primary">Submit</button>
+      </div>
+    </form>
+  </div>
+</dialog>
+<div class="overlay" id="ov" hidden></div>
 
-<!-- Chart.js (CDN). If unavailable, UI still renders without the chart. -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script>
-(function(){
-  if (!window.Chart) return;
-  const labels = ['Latency*','Determinism','Audit','Throughput','Uptime'];
-  const baseline = [100,100,100,100,100];
-  // Non-uniform Aegis deltas to signal precision advantage
-  const aegis    = [185,200,215,160,225];
-
-  const ctx = document.getElementById('benchChart').getContext('2d');
-  new Chart(ctx,{
-    type:'bar',
-    data:{
-      labels,
-      datasets:[
-        { label:'Baseline', data:baseline, backgroundColor:'rgba(120,136,156,.55)', borderColor:'rgba(120,136,156,.65)', borderWidth:1 },
-        { label:'Aegis',    data:aegis,    backgroundColor:'rgba(232,229,222,.88)', borderColor:'rgba(232,229,222,1)',   borderWidth:1 }
-      ]
-    },
-    options:{
-      responsive:true,
-      plugins:{
-        legend:{ labels:{ color:'#cdd4df' } },
-        tooltip:{ intersect:false, mode:'index' }
-      },
-      scales:{
-        x:{ ticks:{ color:'#a9b2bf' }, grid:{ color:'rgba(255,255,255,0.045)'} },
-        y:{ ticks:{ color:'#a9b2bf' }, grid:{ color:'rgba(255,255,255,0.045)' }, suggestedMin:80, suggestedMax:240 }
-      }
-    }
-  });
-})();
+  const open = document.getElementById('openReq');
+  const dlg  = document.getElementById('req');
+  const ov   = document.getElementById('ov');
+  const close = ()=>{ dlg.close(); ov.hidden=true; };
+  open.addEventListener('click', ()=>{ dlg.showModal(); ov.hidden=false; });
+  document.getElementById('closeReq').onclick = close;
+  document.getElementById('cancelReq').onclick = close;
+  ov.addEventListener('click', close);
+  // block native form submit (placeholder for backend wiring)
+  dlg.querySelector('form').addEventListener('submit', e=>{ e.preventDefault(); close(); alert('Request sent.'); });
 </script>
+
 </body>
 </html>
