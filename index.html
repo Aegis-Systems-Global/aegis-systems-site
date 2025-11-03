@@ -4,296 +4,304 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Aegis Systems — Private AI for Critical Infrastructure</title>
-<meta name="color-scheme" content="dark" />
+<meta name="color-scheme" content="dark">
 <style>
   :root{
-    --bg:#0b1117;        /* page background */
-    --panel:#0b1117;     /* panels same as page for seamless look */
-    --ink:#e6edf3;       /* primary text */
-    --muted:#9fb1c0;     /* secondary text */
-    --brand:#b9cdf5;     /* Aegis bone-white/grey-white */
-    --stroke:#1c2631;    /* subtle borders */
-    --accent:#d7e0ff;    /* light accents */
-    --radius:16px;
+    --bg:#0b1117; --card:#0f1621; --ink:#e6eef7; --muted:#9db0c2; --line:#223042;
+    --brand:#cfe1ff; --accent:#8ab4ff; --ok:#43d190; --err:#ff6b6b;
   }
   *{box-sizing:border-box}
-  html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial,"Noto Sans",sans-serif}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji"}
   a{color:inherit;text-decoration:none}
-  .wrap{max-width:1200px;margin:0 auto;padding:28px 22px 80px}
-
-  /* Top bar */
-  .top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px}
-  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px}
+  .wrap{max-width:1200px;margin:0 auto;padding:28px 20px}
+  /* top nav */
+  .nav{display:flex;align-items:center;gap:14px}
   .dots{display:flex;gap:6px}
-  .dots i{width:10px;height:10px;border-radius:2px;background:var(--brand)}
-  .cta{border:1px solid var(--stroke);background:transparent;color:var(--ink);padding:10px 16px;border-radius:999px;font-weight:600}
-  .cta:hover{border-color:#314051}
-
-  /* Grid */
-  .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:start}
-  @media (max-width:980px){.hero{grid-template-columns:1fr;gap:22px}}
-
-  /* Hero text */
-  h1{font-size:54px;line-height:1.05;margin:6px 0 18px}
-  .sub{color:var(--muted);font-size:18px;line-height:1.6;max-width:58ch;margin-bottom:18px}
-  .bullets{list-style:none;padding:0;margin:0;display:grid;gap:12px}
-  .bullets li{display:flex;gap:12px;align-items:start}
-  .bullets li:before{content:"";width:10px;height:10px;border-radius:2px;background:var(--brand);margin-top:.45em;flex:0 0 10px}
-
-  /* Triangle card */
-  .tri-card{background:var(--panel);border:1px solid var(--stroke);border-radius:var(--radius);padding:18px}
-  .tri-title{font-weight:700;margin:2px 0 10px;color:var(--ink)}
-  .tri-wrap{position:relative;aspect-ratio:1.1/1;background:#000;border-radius:12px;padding:16px;overflow:hidden}
-  .tri-label{position:absolute;font-size:16px;color:var(--ink);font-weight:700;letter-spacing:.2px;text-shadow:0 1px 0 rgba(0,0,0,.3)}
-  .tri-top{top:8px;left:50%;transform:translateX(-50%)}
-  .tri-left{left:14px;bottom:12px}
-  .tri-right{right:14px;bottom:12px}
-
-  /* Capability cards + metrics */
-  .cap-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0}
-  @media (max-width:980px){.cap-grid{grid-template-columns:1fr}}
-  .card{background:var(--panel);border:1px solid var(--stroke);border-radius:14px;padding:14px}
-  .card h3{margin:2px 0 6px;font-size:16px}
-  .card p{margin:0;color:var(--muted);font-size:14px}
-  .metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-  @media (max-width:980px){.metric-grid{grid-template-columns:1fr 1fr}}
-  .metric{background:var(--panel);border:1px solid var(--stroke);border-radius:14px;padding:12px}
-  .metric .k{font-weight:700;font-size:18px}
-  .metric .l{font-size:12px;color:var(--muted);margin-top:4px}
-
-  /* Chart */
-  .chart{background:var(--panel);border:1px solid var(--stroke);border-radius:14px;padding:16px;margin-top:14px}
-  .legend{display:flex;gap:18px;align-items:center;margin-bottom:8px;color:var(--muted);font-size:12px}
-  .key{display:inline-flex;align-items:center;gap:8px}
-  .sw{width:12px;height:12px;border-radius:2px;background:#334255}
-  .sw.a{background:#8da9ff}
-  .note{color:#92a6b6;font-size:11px;margin-top:10px}
-
-  /* Modal (form) */
-  .modal{position:fixed;inset:0;background:rgba(2,6,12,.72);opacity:0;pointer-events:none;transition:.2s ease}
-  .modal.open{opacity:1;pointer-events:auto}
-  .sheet{position:absolute;inset:auto 0 0 0;background:var(--panel);border-top:1px solid var(--stroke);border-radius:16px 16px 0 0;max-height:88vh;overflow:auto;padding:18px 18px 26px}
-  @media (min-width:720px){.sheet{inset:10% 50% auto auto;transform:translateX(50%);width:640px;border:1px solid var(--stroke);border-radius:16px}}
-  .sheet h2{margin:4px 0 8px}
-  .f{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  @media (max-width:720px){.f{grid-template-columns:1fr}}
-  .row{display:flex;flex-direction:column;gap:6px}
-  label{font-size:12px;color:var(--muted)}
-  input,select,textarea{background:#0e151d;border:1px solid var(--stroke);color:var(--ink);border-radius:10px;padding:10px 11px;font-size:14px}
-  textarea{min-height:110px;resize:vertical}
-  .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
-  .btn{padding:10px 14px;border-radius:10px;border:1px solid var(--stroke);background:#111a22;color:var(--ink);font-weight:600}
-  .btn.primary{background:#1b2a38;border-color:#294055}
-  .status{margin-top:8px;font-size:13px}
-  .ok{color:#9fe3a1}
-  .err{color:#ffb4b4}
+  .dots i{width:8px;height:8px;border-radius:2px;background:#fff}
+  .brand{font-weight:800;letter-spacing:.3px}
+  .nav-spacer{flex:1}
+  .btn{appearance:none;cursor:pointer;border:1px solid rgba(255,255,255,.16);background:linear-gradient(180deg, #1a2330, #121926);color:var(--ink);
+       padding:10px 16px;border-radius:12px;transition:.15s ease;box-shadow:0 0 0 1px rgba(255,255,255,.04) inset}
+  .btn:hover{border-color:rgba(255,255,255,.28);transform:translateY(-1px)}
+  /* hero */
+  .hero{display:grid;grid-template-columns:1.2fr .9fr;gap:28px;margin-top:28px}
+  .h1{font-size:clamp(34px,5.2vw,64px);line-height:1.05;margin:0 0 14px;font-weight:900}
+  .lead{color:var(--muted);max-width:62ch;margin:8px 0 18px}
+  .sq-list{margin:10px 0 0;padding:0;list-style:none}
+  .sq-list li{display:flex;align-items:flex-start;gap:10px;margin:10px 0;color:var(--ink)}
+  .sq{width:14px;height:14px;border:2px solid #fff;background:#fff;border-radius:2px;margin-top:2px;flex:0 0 14px}
+  /* triangle card */
+  .tri-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 14px 8px}
+  .tri-title{font-weight:700;margin:4px 8px 8px}
+  .tri-wrap{background:#000;border-radius:12px;position:relative;height:min(52vw,480px);display:flex;align-items:center;justify-content:center}
+  canvas{display:block}
+  /* capabilities + KPIs */
+  .grid{display:grid;gap:14px;margin-top:22px}
+  .grid.cols-2{grid-template-columns:1fr 1fr}
+  .cap{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+  .cap h3{margin:0 0 6px;font-size:18px}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:8px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}
+  .kpi .label{font-weight:900;font-size:18px;margin:0 0 4px}
+  .kpi .val{color:var(--muted);font-weight:600;font-size:14px}
+  /* bar chart */
+  .chart-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:14px}
+  .legend{display:flex;gap:18px;margin:2px 0 8px}
+  .lg{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px}
+  .sw{width:14px;height:10px;border-radius:2px}
+  .sw.base{background:#7f8fa3}
+  .sw.aegis{background:#bcd6ff}
+  .note{color:var(--muted);font-size:12px;margin-top:8px}
+  /* modal form */
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:18px;z-index:40}
+  .modal.active{display:flex}
+  .sheet{width:min(720px,100%);background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;max-height:90vh;overflow:auto}
+  .sheet h2{margin:0 0 12px}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .field{display:flex;flex-direction:column;gap:6px;margin:8px 0}
+  label{color:var(--muted);font-size:13px}
+  input,select,textarea{background:#0b121c;border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:10px 12px;font:inherit}
+  textarea{min-height:120px;resize:vertical}
+  .form-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:8px}
+  .pill{border-radius:12px}
+  .ok{color:var(--ok);font-weight:700;margin-right:auto}
+  .err{color:var(--err);margin-right:auto}
+  /* mobile */
+  @media (max-width:900px){
+    .hero{grid-template-columns:1fr}
+    .tri-wrap{height:56vw}
+    .row{grid-template-columns:1fr}
+    .kpis{grid-template-columns:1fr 1fr}
+  }
+  @media (max-width:560px){
+    .kpis{grid-template-columns:1fr}
+  }
 </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="top">
-      <div class="brand">
-        <span class="dots"><i></i><i></i><i></i></span>
-        <span>Aegis Systems</span>
-        <span class="dots"><i></i><i></i><i></i></span>
-      </div>
-      <button class="cta" id="openForm">Request Consideration</button>
+    <div class="nav">
+      <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="brand">Aegis Systems</div>
+      <div class="dots" aria-hidden="true" style="margin-left:4px"><i></i><i></i><i></i></div>
+      <div class="nav-spacer"></div>
+      <button class="btn pill" id="openForm">Request Consideration</button>
     </div>
 
     <section class="hero">
       <div>
-        <h1>Private AI for Critical Infrastructure</h1>
-        <p class="sub">Sovereign, agentic systems that operate safely inside your perimeter, auditable, deterministic, and fit for regulated environments.</p>
-        <ul class="bullets">
-          <li>Agentic automation with verifiable workflows</li>
-          <li>Offline / air-gapped options &amp; zero-leak policies</li>
-          <li>Discipline-by-Design protocols &amp; audit trails</li>
+        <h1 class="h1">Private AI for Critical Infrastructure</h1>
+        <p class="lead">Sovereign, agentic systems that operate safely inside your perimeter, auditable,
+          deterministic, and fit for regulated environments.</p>
+        <ul class="sq-list">
+          <li><span class="sq"></span><span>Agentic automation with verifiable workflows</span></li>
+          <li><span class="sq"></span><span>Offline / air-gapped options & zero-leak policies</span></li>
+          <li><span class="sq"></span><span>Discipline-by-Design protocols & audit trails</span></li>
         </ul>
       </div>
 
       <div class="tri-card">
         <div class="tri-title">Principles</div>
-        <div class="tri-wrap" id="tri">
-          <!-- labels -->
-          <div class="tri-label tri-top">Truth</div>
-          <div class="tri-label tri-left">Discipline</div>
-          <div class="tri-label tri-right">Sovereign</div>
-          <!-- triangle -->
-          <svg viewBox="0 0 100 100" width="100%" height="100%" aria-hidden="true">
-            <polyline points="50,6 6,90 94,90 50,6" fill="none" stroke="white" stroke-width="2" />
-          </svg>
+        <div class="tri-wrap">
+          <canvas id="triangle" width="800" height="520" aria-label="Truth-Sovereign-Discipline triangle"></canvas>
         </div>
       </div>
     </section>
 
-    <section class="cap-grid">
-      <div class="card">
+    <section class="grid cols-2">
+      <div class="cap">
         <h3>Agentic Workflows</h3>
-        <p>Multi-tool execution with explicit guardrails.</p>
+        <div>Multi-tool execution with explicit guardrails.</div>
       </div>
-      <div class="card">
+      <div class="cap">
         <h3>Workflow Memory</h3>
-        <p>No repeat mistakes; evidence-linked steps.</p>
+        <div>No repeat mistakes; evidence-linked steps.</div>
       </div>
-      <div class="card">
+      <div class="cap">
         <h3>Sovereign Compute</h3>
-        <p>Private models; on-prem and offline options.</p>
+        <div>Private models; on-prem and offline options.</div>
       </div>
-      <div class="card">
+      <div class="cap">
         <h3>Discipline Protocols</h3>
-        <p>CAPA, sign-offs, and traceable audit trails.</p>
+        <div>CAPA, sign-offs, and traceable audit trails.</div>
       </div>
     </section>
 
-    <section class="metric-grid">
-      <div class="metric"><div class="k">p95 280ms</div><div class="l">Orchestration latency</div></div>
-      <div class="metric"><div class="k">99.1%</div><div class="l">Determinism on gated flows</div></div>
-      <div class="metric"><div class="k">100%</div><div class="l">Step-level logging coverage</div></div>
-      <div class="metric"><div class="k">&gt;99.95%</div><div class="l">Offline uptime (edge)</div></div>
+    <section class="kpis">
+      <div class="kpi"><div class="label">Orchestration latency (p95)</div><div class="val">280 ms</div></div>
+      <div class="kpi"><div class="label">Determinism on gated flows</div><div class="val">99.1%</div></div>
+      <div class="kpi"><div class="label">Step-level logging coverage</div><div class="val">100%</div></div>
+      <div class="kpi"><div class="label">Offline uptime (edge)</div><div class="val">&gt;99.95%</div></div>
     </section>
 
-    <section class="chart">
+    <section class="chart-card">
       <div class="legend">
-        <span class="key"><span class="sw"></span> Baseline (100)</span>
-        <span class="key"><span class="sw a"></span> Aegis</span>
+        <span class="lg"><span class="sw base"></span>Baseline (100)</span>
+        <span class="lg"><span class="sw aegis"></span>Aegis</span>
       </div>
-      <canvas id="bars" height="220"></canvas>
+      <canvas id="bars" width="1100" height="340" aria-label="Benchmark index chart"></canvas>
       <div class="note">* Latency is inverted in the index (higher is better). Values are representative and workload-adjusted. Baseline = 100.</div>
     </section>
   </div>
 
-  <!-- Modal form -->
+  <!-- Modal Form -->
   <div class="modal" id="modal">
-    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="rcTitle">
-      <h2 id="rcTitle">Request Consideration</h2>
-      <form id="rcForm" class="f" novalidate>
+    <div class="sheet" role="dialog" aria-labelledby="rfctitle" aria-modal="true">
+      <h2 id="rfctitle">Request Consideration</h2>
+
+      <form id="rfcForm">
         <div class="row">
-          <label for="name">Full name</label>
-          <input id="name" name="name" autocomplete="name" required />
+          <div class="field"><label for="name">Full name</label><input id="name" name="name" required></div>
+          <div class="field"><label for="email">Work email</label><input id="email" name="email" type="email" required></div>
         </div>
+
         <div class="row">
-          <label for="email">Work email</label>
-          <input id="email" name="email" type="email" autocomplete="work email" required />
+          <div class="field"><label for="org">Organization</label><input id="org" name="organization" required></div>
+          <div class="field">
+            <label for="otype">Organization type</label>
+            <select id="otype" name="organization_type" required>
+              <option value="" selected>Select organization type</option>
+              <option>Government</option>
+              <option>Regulated enterprise</option>
+              <option>Critical infrastructure operator</option>
+              <option>Private company</option>
+              <option>Other</option>
+            </select>
+          </div>
         </div>
+
         <div class="row">
-          <label for="org">Organization</label>
-          <input id="org" name="organization" required />
+          <div class="field"><label for="role">Role / title</label><input id="role" name="role"></div>
+          <div class="field"><label for="region">Region / jurisdiction</label><input id="region" name="region"></div>
         </div>
-        <div class="row">
-          <label for="type">Organization type</label>
-          <select id="type" name="organization_type" required>
-            <option value="" selected disabled>Select organization type</option>
-            <option>Government</option>
-            <option>Regulated enterprise</option>
-            <option>Critical infrastructure operator</option>
-            <option>Private company</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="row">
-          <label for="role">Role / title</label>
-          <input id="role" name="role" required />
-        </div>
-        <div class="row">
-          <label for="region">Region / jurisdiction</label>
-          <input id="region" name="region" />
-        </div>
-        <div class="row" style="grid-column:1 / -1">
+
+        <div class="field">
           <label for="objective">Objective (high-level)</label>
           <textarea id="objective" name="objective" required></textarea>
         </div>
 
-        <div class="actions" style="grid-column:1 / -1">
+        <div class="form-actions">
+          <div id="formMsg" class=""></div>
           <button type="button" class="btn" id="closeForm">Cancel</button>
-          <button type="submit" class="btn primary" id="submitBtn">Submit</button>
+          <button class="btn pill" type="submit">Submit</button>
         </div>
-        <div id="status" class="status" style="grid-column:1 / -1"></div>
       </form>
     </div>
   </div>
 
 <script>
-  /* ======== CONFIGURE YOUR ENDPOINT HERE ======== */
-  // Option A: Formspree — create a form and paste its ID
-  const ENDPOINT = "https://formspree.io/f/YOUR_FORMSPREE_ID_HERE";
+/* ----- Triangle (pure canvas, true-black background inside container) ----- */
+(function(){
+  const c = document.getElementById('triangle');
+  const ctx = c.getContext('2d');
+  const w = c.width, h = c.height;
+  ctx.clearRect(0,0,w,h);
+  // background
+  ctx.fillStyle = '#000';
+  ctx.fillRect(0,0,w,h);
 
-  // Option B: Vercel serverless function:
-  // const ENDPOINT = "/api/request-consideration";
+  // triangle points
+  const pad = 70;
+  const A = {x: w/2, y: pad+8};
+  const B = {x: pad,   y: h-pad};
+  const C = {x: w-pad, y: h-pad};
 
-  /* ======== UI helpers ======== */
-  const $ = s => document.querySelector(s);
-  const modal = $("#modal");
-  $("#openForm").addEventListener("click", () => { modal.classList.add("open"); document.body.style.overflow="hidden"; });
-  $("#closeForm").addEventListener("click", () => { modal.classList.remove("open"); document.body.style.overflow=""; });
+  // edges
+  ctx.lineWidth = 8;
+  ctx.strokeStyle = '#ffffff';
+  ctx.beginPath(); ctx.moveTo(A.x,A.y); ctx.lineTo(B.x,B.y); ctx.lineTo(C.x,C.y); ctx.closePath(); ctx.stroke();
 
-  // Close on backdrop click
-  modal.addEventListener("click", (e)=>{
-    if(e.target === modal){ modal.classList.remove("open"); document.body.style.overflow=""; }
+  // labels (bigger)
+  ctx.fillStyle = '#cfd8e3';
+  ctx.font = '18px system-ui, -apple-system, Segoe UI, Roboto, Arial';
+  ctx.textAlign = 'center';
+  ctx.fillText('Truth', A.x, A.y-12);
+  ctx.textAlign = 'left';
+  ctx.fillText('Discipline', B.x-2, B.y+26);
+  ctx.textAlign = 'right';
+  ctx.fillText('Sovereign', C.x+2, C.y+26);
+})();
+
+/* ----- Bar chart (baseline vs Aegis, centered) ----- */
+(function(){
+  const c = document.getElementById('bars');
+  const ctx = c.getContext('2d');
+  const w = c.width, h = c.height;
+  const padding = {l:50,r:30,t:10,b:60};
+  const area = {x:padding.l,y:padding.t,w:w-padding.l-padding.r,h:h-padding.t-padding.b};
+
+  const labels = ['Latency*','Determinism','Audit','Throughput','Uptime'];
+  const base =   [100,100,100,100,100];
+  const aegis =  [160,180,200,150,220]; // representative
+
+  const max = 220;
+  // grid
+  ctx.fillStyle='#0c131d'; ctx.fillRect(0,0,w,h);
+  ctx.strokeStyle='#223042'; ctx.lineWidth=1;
+  for(let i=0;i<=4;i++){
+    const y = area.y + area.h - (i*(area.h/4));
+    ctx.beginPath(); ctx.moveTo(area.x,y); ctx.lineTo(area.x+area.w,y); ctx.stroke();
+  }
+
+  const barW = area.w/labels.length;
+  const bw = 18; const gap = 10;
+
+  function yScale(v){ return area.y + area.h - (v/max)*area.h; }
+
+  // draw bars
+  labels.forEach((lab,i)=>{
+    const x = area.x + i*barW + barW/2;
+    // baseline
+    ctx.fillStyle='#7f8fa3';
+    ctx.fillRect(x - (bw+gap/2), yScale(base[i]), bw, area.y+area.h - yScale(base[i]));
+    // aegis
+    ctx.fillStyle='#bcd6ff';
+    ctx.fillRect(x + gap/2, yScale(aegis[i]), bw, area.y+area.h - yScale(aegis[i]));
+    // label
+    ctx.fillStyle='#9db0c2';
+    ctx.font='13px system-ui, -apple-system, Segoe UI';
+    ctx.textAlign='center';
+    ctx.fillText(lab, x, h-20);
   });
+})();
 
-  /* ======== Simple bar chart (vanilla) ======== */
-  (function(){
-    const cvs = document.getElementById("bars");
-    const ctx = cvs.getContext("2d");
-    const w = cvs.width = cvs.clientWidth;
-    const h = cvs.height;
-    const labels = ["Latency*","Determinism","Audit","Throughput","Uptime"];
-    const base = [120,120,120,120,120];
-    const aegis= [195,200,215,165,230];
+/* ----- Modal ----- */
+const open = document.getElementById('openForm');
+const modal = document.getElementById('modal');
+const closeBtn = document.getElementById('closeForm');
+open.addEventListener('click',()=>{ modal.classList.add('active'); document.body.style.overflow='hidden'; });
+closeBtn.addEventListener('click',()=>{ modal.classList.remove('active'); document.body.style.overflow=''; });
 
-    const pad = 46, bw = 22, gap = 34;
-    const max = 240;
-    const toY = v => h - (v/max)*(h - pad) - 12;
+/* ----- Form submit (AJAX to FormSubmit → info@aegis-systems.global) ----- */
+const form = document.getElementById('rfcForm');
+const msg = document.getElementById('formMsg');
 
-    // axes
-    ctx.strokeStyle = "#1c2631"; ctx.lineWidth = 1;
-    for(let i=0;i<4;i++){ const y = ((i+1)/4)*(h - pad) + 6; ctx.beginPath(); ctx.moveTo(12,y); ctx.lineTo(w-12,y); ctx.stroke(); }
-
-    let x = pad;
-    ctx.font = "12px system-ui"; ctx.textAlign = "center"; ctx.fillStyle = "#9fb1c0";
-    labels.forEach((lb,i)=>{
-      // baseline
-      ctx.fillStyle="#334255";
-      ctx.fillRect(x-bw, toY(base[i]), bw, h - toY(base[i]) - 12);
-      // aegis
-      ctx.fillStyle="#8da9ff";
-      ctx.fillRect(x, toY(aegis[i]), bw, h - toY(aegis[i]) - 12);
-      ctx.fillStyle="#92a6b6";
-      ctx.fillText(lb, x, h-2);
-      x += bw*2 + gap;
+form.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  msg.className=''; msg.textContent='';
+  const formData = new FormData(form);
+  // FormSubmit AJAX endpoint
+  const url = 'https://formsubmit.co/ajax/info@aegis-systems.global';
+  try{
+    const res = await fetch(url,{
+      method:'POST',
+      headers:{ 'Accept':'application/json' },
+      body: formData
     });
-  })();
-
-  /* ======== Form submit with confirmation ======== */
-  const form = document.getElementById("rcForm");
-  const status = document.getElementById("status");
-  const submitBtn = document.getElementById("submitBtn");
-
-  form.addEventListener("submit", async (e)=>{
-    e.preventDefault();
-    status.textContent = "";
-    submitBtn.disabled = true; submitBtn.textContent="Sending…";
-
-    const data = Object.fromEntries(new FormData(form).entries());
-    try{
-      const res = await fetch(ENDPOINT, {
-        method: "POST",
-        headers: {"Accept":"application/json","Content-Type":"application/json"},
-        body: JSON.stringify(data)
-      });
-      if(!res.ok) throw new Error("Network error");
-      // Formspree returns JSON { ok:true } when configured; tolerate variations:
-      status.innerHTML = "<span class='ok'>Request received. We’ll be in touch.</span>";
+    const data = await res.json();
+    if(res.ok){
+      msg.className='ok';
+      msg.textContent = 'Sent. We will get back to you.';
       form.reset();
-      // close after short delay on desktop
-      setTimeout(()=>{ modal.classList.remove("open"); document.body.style.overflow=""; status.textContent=""; }, 1400);
-    }catch(err){
-      console.error(err);
-      status.innerHTML = "<span class='err'>Couldn’t send. Please try again or email contact@aegis-systems.global.</span>";
-    }finally{
-      submitBtn.disabled=false; submitBtn.textContent="Submit";
+    }else{
+      throw new Error(data.message || 'Send failed');
     }
-  });
+  }catch(err){
+    msg.className='err';
+    msg.textContent = 'Couldn’t send. Please try again or email info@aegis-systems.global.';
+  }
+});
 </script>
 </body>
 </html>
